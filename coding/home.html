@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            height: 100vh;
+        }
+        a {
+            text-decoration: none;
+        }
+        .header {
+            display: flex;
+            align-items: center; 
+            padding: 15px 20px;
+            background-color: whitesmoke;
+            border-bottom: 2px solid black;
+        }
+        .home_page {
+            font-weight: bold; 
+            font-size: 1.2em;
+        }
+        .heaedr_right{
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            gap: 25px;
+        }
+        .main_div{
+            display: flex;
+            justify-content: center;
+            flex-direction: column; 
+            align-items: center;    
+        }
+        .wellcome {
+            text-align: center;
+            margin-top: 64px;
+        }
+        .move {
+            display: flex;
+            flex-direction: row;
+            gap: 24px;
+            margin-top: 32px;
+        }
+        .move > div {
+            width: 120px;
+            height: 120px;
+            background: #f3f3f3;
+            border: 2px solid #bbb;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            box-shadow: 2px 2px 8px #eee;
+            transition: box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .move > div:hover {
+            box-shadow: 4px 4px 16px #ccc;
+            background: #e9e9e9;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- 여기서 이제 헤드를 만들어보자 -->
+    <div class="header">
+        <div class="home_page">
+            <a href="#">Home</a>
+        </div>
+        <div class="heaedr_right">
+            <div class="login">
+                <a href="#">Login</a>
+            </div>
+            <div class="setting">
+                <p>설정</p>
+            </div>
+            <div class="user">
+                <p>사용자</p>
+            </div>
+        </div>
+    </div>
+    <!-- 이제는 인사와 박스들 -->
+    <div class="main_div">
+        <div class="wellcome">
+            <h1>안녕하세요. 안동건님</h1>
+            <p>어디로 가고 싶은가요?</p>
+        </div>
+        <div class="move">
+            <div class="main_page">
+                <a href="#">메인페이지</a>
+            </div>
+            <div class="calender">
+                <a href="#">캘린더</a>
+            </div>
+            <div class="log">
+                <a href="#">기록</a>
+            </div>
+            <div class="note">
+                <a href="#">노트</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
