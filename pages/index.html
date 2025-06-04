@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Life</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <nav class="top-nav">
+      <a href="index.html" class="active">홈</a>
+      <a href="calendar.html">캘린더</a>
+      <a href="diary.html">일기</a>
+      <a href="notes.html">노트</a>
+      <a href="music.html">음악</a>
+    </nav>
+
+    <div class="container">
+      <main>
+        <section class="weather-section">
+          <h2>오늘의 날씨</h2>
+          <div class="weather-content">
+            <div id="weather-info">로딩중...</div>
+          </div>
+        </section>
+
+        <section class="calendar-grid-section">
+          <div class="calendar-header">
+            <div class="month-navigation">
+              <span class="prev-month">&lt;</span>
+              <span class="current-month" id="current-month-year"></span>
+              <span class="next-month">&gt;</span>
+            </div>
+            <div class="today-button" id="today-button">오늘</div>
+          </div>
+          <div class="calendar-weekdays" id="calendar-weekdays">
+            <!-- 요일이 여기에 들어갑니다 -->
+          </div>
+          <div class="calendar-days" id="calendar-days">
+            <!-- 날짜 셀이 여기에 들어갑니다 -->
+          </div>
+        </section>
+
+        <section class="side-panels">
+          <div class="music-panel">
+            <h3>오늘의 음악 추천</h3>
+            <div class="music-content">
+              <div id="music-recommendation">로딩중...</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="fortune-section">
+          <h2>오늘의 운세</h2>
+          <div class="fortune-content">
+            <div class="zodiac-sign">
+              <h3>별자리 운세</h3>
+              <p id="zodiac-fortune">로딩중...</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="quote-section">
+          <h2>오늘의 명언</h2>
+          <div class="quote-content">
+            <p id="daily-quote">로딩중...</p>
+            <p id="quote-author"></p>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="../js/script.js"></script>
+  </body>
+</html>
