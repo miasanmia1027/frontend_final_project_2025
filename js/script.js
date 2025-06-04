@@ -112,6 +112,16 @@ let currentYear = new Date().getFullYear();
 let currentMonth = new Date().getMonth();
 
 document.addEventListener('DOMContentLoaded', () => {
+    // 현재 페이지에 맞는 네비게이션 항목 활성화
+    const currentPage = window.location.pathname.split('/').pop();
+    const navLinks = document.querySelectorAll('.top-nav a');
+    
+    navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
+        }
+    });
+
     updateDate();
     
     // 별자리 운세 표시

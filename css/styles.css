@@ -46,6 +46,7 @@ body {
 .top-nav a.active {
     background-color: #3498db;
     color: #fff;
+    left: 0%;
 }
 
 .top-nav a:hover {
