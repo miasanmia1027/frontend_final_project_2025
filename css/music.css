@@ -1,11 +1,11 @@
 .music-player {
-  margin: 20px;
+  margin: 2px;
   padding: 20px;
   background: #fff;
   border-radius: 15px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  max-width: 200px;
-  min-height: 400px;
+  max-width: 300px;
+  min-height: 450px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -22,8 +22,8 @@
 }
 
 .album-cover {
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   border-radius: 10px;
   object-fit: cover;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -45,23 +45,27 @@
 }
 
 .track-info {
-  flex: 1;
+  flex: 2;
+  width: 100%;
+  padding: 0 10px;
 }
 
 .song-title {
   font-family: 'BagelFatOne-Regular';
-  margin: 5px 0;
-  font-size: 20em;
+  margin: 13px 0;
+  font-size: 2.0em;
   font-weight: bold;
   text-align: center;
+  line-height: 1.2;
 }
 
 .artist {
   font-family: 'SUIT-Regular';
-  margin: 5px 0;
-  font-size: 0.9em;
+  margin: 10px 0;
+  font-size: 1.2em;
   color: #555;
   text-align: center;
+  line-height: 1.4;
 }
 
 .progress-bar {
@@ -83,15 +87,19 @@
 .controls {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-top: 10px;
+  width: 100%;
 }
 
 .controls button {
   background: none;
   border: none;
-  font-size: 1.2em;
+  font-size: 1.5em;
   cursor: pointer;
   margin: 0 5px;
+  align-items: center;
+  color: #444;
 }
 
 @font-face {
