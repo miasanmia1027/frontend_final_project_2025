@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Daily Life</title>
     <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/music.css" />
   </head>
   <body>
     <nav class="top-nav">
@@ -43,9 +44,30 @@
 
         <section class="side-panels">
           <div class="music-panel">
-            <h3>오늘의 음악 추천</h3>
+            <h3>Music Player</h3>
             <div class="music-content">
-              <div id="music-recommendation">로딩중...</div>
+              <!-- 음악 플레이어 영역 추가 -->
+              <section class="music-player">
+                <div class="player">
+                  <img
+                    src="../assets/Wish_album.jpg"
+                    alt="앨범 커버"
+                    class="album-cover"
+                  />
+                  <div class="track-info">
+                    <h3 class="song-title">Hands Up</h3>
+                    <p class="artist">NCT WISH</p>
+                    <div class="progress-bar">
+                      <div class="progress"></div>
+                    </div>
+                    <div class="controls">
+                      <button id="prev">⏮</button>
+                      <button id="play">⏯</button>
+                      <button id="next">⏭</button>
+                    </div>
+                  </div>
+                </div>
+              </section>
             </div>
           </div>
         </section>
@@ -63,12 +85,87 @@
         <section class="quote-section">
           <h2>오늘의 명언</h2>
           <div class="quote-content">
-            <p id="daily-quote">로딩중...</p>
             <p id="quote-author"></p>
           </div>
         </section>
       </main>
     </div>
     <script src="../js/script.js"></script>
+    <script>
+      const albumCover = document.querySelector(".album-cover");
+      const songTitle = document.querySelector(".song-title");
+      const artist = document.querySelector(".artist");
+      const prevButton = document.getElementById("prev");
+      const playButton = document.getElementById("play");
+      const nextButton = document.getElementById("next");
+
+      // TODO: Add your list of recommended songs here
+      const recommendedSongs = [
+        {
+          albumArt: "../assets/Wish_album.jpg",
+          title: "Wish",
+          artist: "NCT WISH",
+        },
+        // Add more songs here, e.g.,
+        {
+          albumArt: "../assets/Songbird_album.jpg",
+          title: "Songbird",
+          artist: "NCT WISH",
+        },
+        {
+          albumArt: "../assets/NASA_albm.jpg",
+          title: "NASA",
+          artist: "NCT WISH",
+        },
+        {
+          albumArt: "../assets/poppop_album.jpg",
+          title: "Poppop",
+          artist: "NCT WISH",
+        },
+        {
+          albumArt: "../assets/steady_album.jpg",
+          title: "Steady",
+          artist: "NCT WISH",
+        },
+        {
+          albumArt: "../assets/Songbird_album.jpg",
+          title: "Songbird",
+          artist: "NCT WISH",
+        },
+      ];
+
+      let currentSongIndex = 0;
+
+      function loadSong(song) {
+        albumCover.src = song.albumArt;
+        songTitle.textContent = song.title;
+        artist.textContent = song.artist;
+        // TODO: Add logic to load and play the actual audio file
+      }
+
+      function nextSong() {
+        currentSongIndex = (currentSongIndex + 1) % recommendedSongs.length;
+        loadSong(recommendedSongs[currentSongIndex]);
+      }
+
+      function prevSong() {
+        currentSongIndex =
+          (currentSongIndex - 1 + recommendedSongs.length) %
+          recommendedSongs.length;
+        loadSong(recommendedSongs[currentSongIndex]);
+      }
+
+      // Event Listeners for buttons
+      nextButton.addEventListener("click", nextSong);
+      prevButton.addEventListener("click", prevSong);
+
+      // TODO: Add play/pause functionality
+      playButton.addEventListener("click", function () {
+        alert("재생/일시정지 기능 구현 예정!");
+      });
+
+      // Initial song load
+      loadSong(recommendedSongs[currentSongIndex]);
+    </script>
   </body>
 </html>

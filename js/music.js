@@ -1,10 +1,10 @@
 // 음악 추천
 const musicRecommendations = [
-    "BTS - Dynamite",
-    "IU - Celebrity",
-    "NewJeans - Hype Boy",
-    "LE SSERAFIM - UNFORGIVEN",
-    "IVE - I AM"
+    "NCT wish - steady",
+    "NCT wish - wish",
+    "NCT wish - poppop",
+    "NCT wish - Hands Up",
+    "NCT wish - NASA"
 ];
 
 // 랜덤 요소 선택 함수
