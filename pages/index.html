@@ -55,7 +55,7 @@
                     class="album-cover"
                   />
                   <div class="track-info">
-                    <h3 class="song-title">Hands Up</h3>
+                    <h3 class="song-title">Wish</h3>
                     <p class="artist">NCT WISH</p>
                     <div class="progress-bar">
                       <div class="progress"></div>
@@ -159,9 +159,9 @@
       nextButton.addEventListener("click", nextSong);
       prevButton.addEventListener("click", prevSong);
 
-      // TODO: Add play/pause functionality
-      playButton.addEventListener("click", function () {
-        alert("재생/일시정지 기능 구현 예정!");
+      // 재생 버튼 클릭 이벤트
+      document.getElementById("play").addEventListener("click", () => {
+        window.open("https://www.youtube.com/watch?v=LNETckymbzk", "_blank");
       });
 
       // Initial song load

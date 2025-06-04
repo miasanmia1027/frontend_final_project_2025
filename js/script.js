@@ -35,16 +35,18 @@ const quotes = [
     { text: "오늘의 투자는 내일의 성공입니다.", author: "알렉산더 그레이엄 벨" }
 ];
 
-// 날씨 정보 가져오기 (OpenWeatherMap API 사용 예시)
+// 날씨 정보 가져오기
 async function getWeather() {
-    // 실제 구현시 API 키와 도시 정보를 사용해야 합니다
     const weatherInfo = document.getElementById('weather-info');
     weatherInfo.textContent = "날씨 정보를 불러오는 중...";
     
-    // API 호출 예시 (실제 구현 필요)
-    // const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=YOUR_API_KEY`);
-    // const data = await response.json();
-    // weatherInfo.textContent = `현재 기온: ${Math.round(data.main.temp - 273.15)}°C, ${data.weather[0].description}`;
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=YOUR_API_KEY`);
+        const data = await response.json();
+        weatherInfo.textContent = `현재 기온: ${Math.round(data.main.temp - 273.15)}°C, ${data.weather[0].description}`;
+    } catch (error) {
+        weatherInfo.textContent = "날씨 정보를 불러올 수 없습니다.";
+    }
 }
 
 // 음악 추천 데이터
@@ -157,6 +159,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 음악 추천 표시
     document.getElementById('music-recommendation').textContent = 
         getRandomElement(musicRecommendations);
+
+    // 재생 버튼 클릭 이벤트
+    document.getElementById('play').addEventListener('click', () => {
+        window.open('https://www.youtube.com/watch?v=LNETckymbzk', '_blank');
+    });
 
     // Placeholder for memo and checklist functionality
     // const memoContent = document.getElementById('memo-content'); // Removed memo

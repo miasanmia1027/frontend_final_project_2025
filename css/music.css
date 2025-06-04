@@ -4,7 +4,8 @@
   background: #fff;
   border-radius: 15px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  max-width: 350px;
+  max-width: 200px;
+  min-height: 400px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -13,7 +14,8 @@
 }
 
 .player {
-  display: 150px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 20px;
   width: 100%;
@@ -47,22 +49,26 @@
 }
 
 .song-title {
-  margin: 0;
-  font-size: 1em;
+  font-family: 'BagelFatOne-Regular';
+  margin: 5px 0;
+  font-size: 20em;
   font-weight: bold;
+  text-align: center;
 }
 
 .artist {
+  font-family: 'SUIT-Regular';
   margin: 5px 0;
   font-size: 0.9em;
   color: #555;
+  text-align: center;
 }
 
 .progress-bar {
   background: #ddd;
   border-radius: 10px;
   height: 6px;
-  margin: 10px 0;
+  margin: 15px 0;
   position: relative;
   overflow: hidden;
 }
@@ -86,4 +92,18 @@
   font-size: 1.2em;
   cursor: pointer;
   margin: 0 5px;
+}
+
+@font-face {
+  font-family: 'BagelFatOne-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_JAMO@1.0/BagelFatOne-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SUIT-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }

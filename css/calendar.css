@@ -65,34 +65,71 @@
     flex-direction: column;
 }
 
-.calendar-header {
+/* Calendar Grid Section Styles */
+.calendar-grid-section .calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
 }
 
-.calendar-header .navigation span {
-    margin: 0 10px;
+.calendar-grid-section .month-navigation span {
+    margin: 0 5px;
     font-size: 1.2em;
     font-weight: bold;
-}
-
-.calendar-header .view-toggle button {
-    padding: 5px 10px;
-    margin-left: 5px;
-    border: 1px solid #ccc;
-    background-color: #f0f0f0;
-    border-radius: 5px;
     cursor: pointer;
 }
 
-.calendar-header .view-toggle button.active {
-    background-color: #3498db;
-    color: #fff;
-    border-color: #3498db;
+.calendar-grid-section .today-button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    font-size: 0.9em;
 }
 
+.calendar-grid-section .calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.calendar-grid-section .calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background-color: #eee;
+    border: 1px solid #eee;
+}
+
+.calendar-grid-section .day-cell {
+    background-color: #fff;
+    min-height: 100px;
+    padding: 10px;
+    font-size: 0.9em;
+    overflow: hidden;
+}
+
+.calendar-grid-section .day-cell .date-number {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.calendar-grid-section .day-cell:nth-child(7n+1) .date-number { 
+    color: #e74c3c; /* Red for Sunday */ 
+}
+
+.calendar-grid-section .day-cell:nth-child(7n) .date-number { 
+    color: #3498db; /* Blue for Saturday */ 
+}
+
+/* Calendar Grid Styles */
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -111,7 +148,7 @@
     background-color: #f9f9f9;
     border: 1px solid #eee;
     padding: 10px;
-    min-height: 100px; /* Adjust as needed */
+    min-height: 100px;
     overflow-y: auto;
     font-size: 0.9em;
 }
