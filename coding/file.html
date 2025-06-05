@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전공 노트 관리</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 4px;
+            padding: 6px 10px;
+            width: 300px;
+            border: 1px solid #ddd;
+        }
+
+        .search-container input {
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 4px;
+        }
+
+        .search-container button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 61px);
+        }
+
+        /* 왼쪽 트리 메뉴 */
+        .sidebar {
+            width: 250px;
+            background: #fff;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .tree-menu {
+            list-style: none;
+        }
+
+        .tree-item {
+            margin-bottom: 5px;
+        }
+
+        .tree-item-header {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .tree-item-header:hover {
+            background-color: #f0f0f0;
+        }
+
+        .tree-item-header.active {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .tree-item-toggle {
+            margin-right: 5px;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+        }
+
+        .tree-item-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .tree-item-children {
+            padding-left: 20px;
+            display: none;
+        }
+
+        .tree-item-children.expanded {
+            display: block;
+        }
+
+        /* 메인 콘텐츠 영역 */
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .content-header {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-title {
+            font-size: 1.5em;
+            font-weight: 500;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .content-title-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .action-buttons button {
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        /* 파일 카드 그리드 */
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .file-card {
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .file-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .file-card-header {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .file-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 8px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .file-icon.pdf { background-color: #f44336; color: white; }
+        .file-icon.txt { background-color: #2196f3; color: white; }
+        .file-icon.ppt { background-color: #ff9800; color: white; }
+        .file-icon.docx { background-color: #4caf50; color: white; }
+
+        .file-name {
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-card-body {
+            padding: 12px;
+            color: #777;
+            font-size: 12px;
+        }
+
+        .file-actions {
+            display: flex;
+            border-top: 1px solid #eee;
+        }
+
+        .file-action-btn {
+            flex: 1;
+            padding: 8px;
+            text-align: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #777;
+            font-size: 12px;
+            transition: background-color 0.2s;
+        }
+
+        .file-action-btn:hover {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .file-action-btn:not(:last-child) {
+            border-right: 1px solid #eee;
+        }
+
+        /* 모달 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 400px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .modal-header {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 15px;
+        }
+
+        .modal-footer {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            text-align: right;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #1976d2;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: #333;
+            margin-right: 8px;
+        }
+
+        /* 드래그 앤 드롭 스타일 */
+        .drag-over {
+            background-color: rgba(25, 118, 210, 0.1);
+            border: 2px dashed #1976d2;
+        }
+
+        .dragging {
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>전공 노트 관리</h1>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="파일 또는 전공 검색...">
+            <button id="search-btn">🔍</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <ul class="tree-menu" id="subjects-tree">
+                <!-- 전공 트리 메뉴 여기에 추가됨 -->
+            </ul>
+        </aside>
+
+        <main class="content">
+            <div class="content-header">
+                <h2 class="content-title">
+                    <span class="content-title-color" id="current-color"></span>
+                    <span id="current-title">모든 파일</span>
+                </h2>
+                <div class="action-buttons">
+                    <button id="add-file-btn">파일 추가</button>
+                    <button id="add-subject-btn">전공 추가</button>
+                </div>
+            </div>
+
+            <div class="files-grid" id="files-grid">
+                <!-- 파일 카드들이 여기에 표시됨 -->
+            </div>
+        </main>
+    </div>
+
+    <!-- 새 전공 추가 모달 -->
+    <div class="modal" id="add-subject-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>새 전공 추가</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="subject-name">전공 이름</label>
+                    <input type="text" id="subject-name" placeholder="전공 이름 입력">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close-btn">취소</button>
+                <button class="btn btn-primary" id="save-subject-btn">추가</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 새 파일 추가 모달 -->
+    <div class="modal" id="add-file-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>새 파일 추가</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="file-name">파일 이름</label>
+                    <input type="text" id="file-name" placeholder="파일 이름 입력">
+                </div>
+                <div class="form-group">
+                    <label for="file-type">파일 형식</label>
+                    <select id="file-type">
+                        <option value="txt">텍스트 (.txt)</option>
+                        <option value="pdf">PDF (.pdf)</option>
+                        <option value="docx">Word (.docx)</option>
+                        <option value="ppt">PowerPoint (.ppt)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="file-subject">전공 선택</label>
+                    <select id="file-subject">
+                        <!-- 전공 목록이 여기에 추가됨 -->
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close-btn">취소</button>
+                <button class="btn btn-primary" id="save-file-btn">추가</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 전공 데이터
+        const subjects = [
+            { id: 'computer', name: '컴퓨터공학', color: '#e74c3c', 
+              files: ['알고리즘 기초.txt', '자료구조 요약.pdf', '프로그래밍 언어론.ppt'] },
+            { id: 'math', name: '수학', color: '#2ecc71',
+              files: ['미적분학 노트.txt', '선형대수 문제풀이.pdf', '확률과 통계.docx'] },
+            { id: 'physics', name: '물리학', color: '#f39c12',
+              files: ['역학 노트.pdf', '전자기학 정리.txt', '양자역학 기초.ppt'] },
+            { id: 'chemistry', name: '화학', color: '#9b59b6',
+              files: ['유기화학 반응.txt', '무기화학 요약.pdf', '분석화학 실험.docx'] },
+            { id: 'biology', name: '생물학', color: '#16a085',
+              files: ['세포생물학.pdf', '유전학 노트.txt', '생태계 분석.docx'] },
+            { id: 'literature', name: '문학', color: '#3498db',
+              files: ['현대시 분석.pdf', '소설의 이해.txt', '문학 비평.docx'] }
+        ];
+
+        // DOM 요소
+        const subjectsTree = document.getElementById('subjects-tree');
+        const filesGrid = document.getElementById('files-grid');
+        const currentTitle = document.getElementById('current-title');
+        const currentColor = document.getElementById('current-color');
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+        
+        // 모달 요소
+        const addSubjectModal = document.getElementById('add-subject-modal');
+        const addFileModal = document.getElementById('add-file-modal');
+        const addSubjectBtn = document.getElementById('add-subject-btn');
+        const addFileBtn = document.getElementById('add-file-btn');
+        const saveSubjectBtn = document.getElementById('save-subject-btn');
+        const saveFileBtn = document.getElementById('save-file-btn');
+        const modalCloseButtons = document.querySelectorAll('.modal-close, .modal-close-btn');
+        
+        // 현재 선택된 전공
+        let currentSubject = null;
+
+        // 트리 메뉴 초기화
+        function initTreeMenu() {
+            // 모든 파일 항목
+            const allFilesItem = document.createElement('li');
+            allFilesItem.className = 'tree-item';
+            allFilesItem.innerHTML = `
+                <div class="tree-item-header active" data-id="all">
+                    <div class="tree-item-color" style="background-color: #3498db;"></div>
+                    <span>모든 파일</span>
+                </div>
+            `;
+            subjectsTree.appendChild(allFilesItem);
+            
+            // 전공별 트리 아이템
+            subjects.forEach(subject => {
+                const treeItem = createSubjectTreeItem(subject);
+                subjectsTree.appendChild(treeItem);
+            });
+            
+            // 트리 아이템 클릭 이벤트
+            subjectsTree.addEventListener('click', handleTreeClick);
+        }
+        
+        // 전공 트리 아이템 생성
+        function createSubjectTreeItem(subject) {
+            const li = document.createElement('li');
+            li.className = 'tree-item';
+            
+            li.innerHTML = `
+                <div class="tree-item-header" data-id="${subject.id}">
+                    <div class="tree-item-toggle">+</div>
+                    <div class="tree-item-color" style="background-color: ${subject.color};"></div>
+                    <span>${subject.name}</span>
+                </div>
+                <ul class="tree-item-children" data-parent="${subject.id}">
+                    ${subject.files.map(file => `
+                        <li class="tree-item">
+                            <div class="tree-item-header" data-id="${subject.id}" data-file="${file}">
+                                <div class="tree-item-color" style="background-color: transparent;"></div>
+                                <span>${file}</span>
+                            </div>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
+            
+            return li;
+        }
+
+        // 트리 클릭 이벤트 처리
+        function handleTreeClick(e) {
+            const header = e.target.closest('.tree-item-header');
+            if (!header) return;
+            
+            // 활성화된 항목 표시
+            document.querySelectorAll('.tree-item-header.active').forEach(item => {
+                item.classList.remove('active');
+            });
+            header.classList.add('active');
+            
+            // 토글 버튼 클릭 처리
+            if (e.target.classList.contains('tree-item-toggle')) {
+                const parentId = header.dataset.id;
+                const childrenContainer = document.querySelector(`.tree-item-children[data-parent="${parentId}"]`);
+                
+                if (childrenContainer) {
+                    childrenContainer.classList.toggle('expanded');
+                    e.target.textContent = childrenContainer.classList.contains('expanded') ? '-' : '+';
+                    return;
+                }
+            }
+            
+            // 파일 표시
+            const subjectId = header.dataset.id;
+            const fileName = header.dataset.file;
+            
+            if (subjectId === 'all') {
+                // 모든 파일 표시
+                showAllFiles();
+                currentSubject = null;
+                currentTitle.textContent = '모든 파일';
+                currentColor.style.backgroundColor = '#3498db';
+            } else if (fileName) {
+                // 특정 파일 열기
+                const subject = subjects.find(s => s.id === subjectId);
+                if (subject) {
+                    alert(`${fileName} 파일을 엽니다.`);
+                }
+            } else {
+                // 전공별 파일 표시
+                const subject = subjects.find(s => s.id === subjectId);
+                if (subject) {
+                    showSubjectFiles(subject);
+                    currentSubject = subject;
+                    currentTitle.textContent = `${subject.name} 파일`;
+                    currentColor.style.backgroundColor = subject.color;
+                }
+            }
+        }
+        
+        // 모든 파일 표시
+        function showAllFiles() {
+            filesGrid.innerHTML = '';
+            subjects.forEach(subject => {
+                subject.files.forEach(fileName => {
+                    const fileCard = createFileCard(fileName, subject);
+                    filesGrid.appendChild(fileCard);
+                });
+            });
+        }
+        
+        // 전공별 파일 표시
+        function showSubjectFiles(subject) {
+            filesGrid.innerHTML = '';
+            subject.files.forEach(fileName => {
+                const fileCard = createFileCard(fileName, subject);
+                filesGrid.appendChild(fileCard);
+            });
+        }
+        
+        // 파일 카드 생성
+        function createFileCard(fileName, subject) {
+            const fileType = fileName.split('.').pop().toLowerCase();
+            
+            const card = document.createElement('div');
+            card.className = 'file-card';
+            card.setAttribute('draggable', true);
+            card.dataset.file = fileName;
+            card.dataset.subject = subject.id;
+            
+            card.innerHTML = `
+                <div class="file-card-header">
+                    <div class="file-icon ${fileType}">${fileType}</div>
+                    <div class="file-name">${fileName}</div>
+                </div>
+                <div class="file-card-body">
+                    ${subject.name}
+                </div>
+                <div class="file-actions">
+                    <button class="file-action-btn file-open-btn">열기</button>
+                    <button class="file-action-btn file-edit-btn">수정</button>
+                    <button class="file-action-btn file-delete-btn">삭제</button>
+                </div>
+            `;
+            
+            // 파일 카드 이벤트
+            card.querySelector('.file-open-btn').addEventListener('click', () => {
+                alert(`${fileName} 파일을 엽니다.`);
+            });
+            
+            card.querySelector('.file-edit-btn').addEventListener('click', () => {
+                const newName = prompt('파일 이름 수정:', fileName);
+                if (newName && newName !== fileName) {
+                    const index = subject.files.indexOf(fileName);
+                    subject.files[index] = newName;
+                    if (currentSubject === subject) {
+                        showSubjectFiles(subject);
+                    } else {
+                        showAllFiles();
+                    }
+                    updateTreeMenu();
+                }
+            });
+            
+            card.querySelector('.file-delete-btn').addEventListener('click', () => {
+                if (confirm(`${fileName} 파일을 삭제하시겠습니까?`)) {
+                    const index = subject.files.indexOf(fileName);
+                    subject.files.splice(index, 1);
+                    if (currentSubject === subject) {
+                        showSubjectFiles(subject);
+                    } else {
+                        showAllFiles();
+                    }
+                    updateTreeMenu();
+                }
+            });
+            
+            // 드래그 앤 드롭 이벤트
+            card.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', JSON.stringify({
+                    file: fileName,
+                    fromSubject: subject.id
+                }));
+                card.classList.add('dragging');
+            });
+            
+            card.addEventListener('dragend', () => {
+                card.classList.remove('dragging');
+            });
+            
+            return card;
+        }
+        
+        // 드래그 앤 드롭 이벤트 - 파일 이동
+        filesGrid.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+        
+        filesGrid.addEventListener('drop', (e) => {
+            e.preventDefault();
+            if (!currentSubject) return; // 모든 파일 보기에서는 이동 불가
+            
+            try {
+                const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                const fromSubject = subjects.find(s => s.id === data.fromSubject);
+                
+                if (fromSubject && fromSubject !== currentSubject) {
+                    // 파일 이동
+                    const index = fromSubject.files.indexOf(data.file);
+                    if (index !== -1) {
+                        fromSubject.files.splice(index, 1);
+                        currentSubject.files.push(data.file);
+                        showSubjectFiles(currentSubject);
+                        updateTreeMenu();
+                    }
+                }
+            } catch (err) {
+                console.error('드래그 앤 드롭 오류:', err);
+            }
+        });
+        
+        // 트리 메뉴 업데이트
+        function updateTreeMenu() {
+            subjectsTree.innerHTML = '';
+            initTreeMenu();
+        }
+        
+        // 검색 기능
+        searchBtn.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performSearch();
+        });
+        
+        function performSearch() {
+            const query = searchInput.value.trim().toLowerCase();
+            if (!query) {
+                if (currentSubject) {
+                    showSubjectFiles(currentSubject);
+                } else {
+                    showAllFiles();
+                }
+                return;
+            }
+            
+            filesGrid.innerHTML = '';
+            
+            subjects.forEach(subject => {
+                const matchingFiles = subject.files.filter(file => 
+                    file.toLowerCase().includes(query));
+                
+                matchingFiles.forEach(fileName => {
+                    const fileCard = createFileCard(fileName, subject);
+                    filesGrid.appendChild(fileCard);
+                });
+            });
+            
+            currentTitle.textContent = `"${query}" 검색 결과`;
+        }
+        
+        // 모달 이벤트
+        addSubjectBtn.addEventListener('click', () => {
+            addSubjectModal.classList.add('active');
+        });
+        
+        addFileBtn.addEventListener('click', () => {
+            const fileSubjectSelect = document.getElementById('file-subject');
+            fileSubjectSelect.innerHTML = '';
+            
+            subjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject.id;
+                option.textContent = subject.name;
+                if (currentSubject && subject.id === currentSubject.id) {
+                    option.selected = true;
+                }
+                fileSubjectSelect.appendChild(option);
+            });
+            
+            addFileModal.classList.add('active');
+        });
+        
+        modalCloseButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const modal = button.closest('.modal');
+                modal.classList.remove('active');
+            });
+        });
+        
+        saveSubjectBtn.addEventListener('click', () => {
+            const nameInput = document.getElementById('subject-name');
+            const subjectName = nameInput.value.trim();
+            
+            if (subjectName) {
+                // 새 전공 추가
+                const id = subjectName.toLowerCase().replace(/\s+/g, '_');
+                const colors = ['#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#16a085', '#3498db', '#e67e22', '#1abc9c'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                const newSubject = {
+                    id,
+                    name: subjectName,
+                    color,
+                    files: []
+                };
+                
+                subjects.push(newSubject);
+                updateTreeMenu();
+                showSubjectFiles(newSubject);
+                currentSubject = newSubject;
+                currentTitle.textContent = `${newSubject.name} 파일`;
+                currentColor.style.backgroundColor = newSubject.color;
+                
+                nameInput.value = '';
+                addSubjectModal.classList.remove('active');
+            }
+        });
+        
+        saveFileBtn.addEventListener('click', () => {
+            const nameInput = document.getElementById('file-name');
+            const typeSelect = document.getElementById('file-type');
+            const subjectSelect = document.getElementById('file-subject');
+            
+            const fileName = nameInput.value.trim();
+            const fileType = typeSelect.value;
+            const subjectId = subjectSelect.value;
+            
+            if (fileName && subjectId) {
+                const fullFileName = `${fileName}.${fileType}`;
+                const subject = subjects.find(s => s.id === subjectId);
+                
+                if (subject) {
+                    subject.files.push(fullFileName);
+                    updateTreeMenu();
+                    
+                    if (currentSubject === subject) {
+                        showSubjectFiles(subject);
+                    } else {
+                        currentSubject = subject;
+                        showSubjectFiles(subject);
+                        currentTitle.textContent = `${subject.name} 파일`;
+                        currentColor.style.backgroundColor = subject.color;
+                    }
+                    
+                    nameInput.value = '';
+                    addFileModal.classList.remove('active');
+                }
+            }
+        });
+        
+        // 초기화
+        initTreeMenu();
+        showAllFiles();
+    </script>
+</body>
+</html>

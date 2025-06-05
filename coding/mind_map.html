@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전공 마인드맵</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 61px);
+            position: relative;
+        }
+
+        /* 마인드맵 영역 */
+        .mindmap-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background: #f9f9f9;
+        }
+
+        .mindmap {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+        }
+
+        .center-node {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #3498db;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            z-index: 10;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+            cursor: default;
+        }
+
+        .branch {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            height: 2px;
+            transform-origin: left center;
+            background-color: #95a5a6;
+        }
+
+        .node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            z-index: 5;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.16);
+            transition: all 0.3s ease;
+        }
+
+        .node:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        /* 각 전공 노드 색상 */
+        .node.computer { background-color: #e74c3c; }
+        .node.math { background-color: #2ecc71; }
+        .node.physics { background-color: #f39c12; }
+        .node.chemistry { background-color: #9b59b6; }
+        .node.biology { background-color: #16a085; }
+        .node.literature { background-color: #3498db; }
+
+        /* 파일 목록 영역 */
+        .files-panel {
+            width: 0;
+            background: white;
+            transition: width 0.3s ease;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            z-index: 20;
+        }
+
+        .files-panel.active {
+            width: 300px;
+        }
+
+        .files-header {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-panel {
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .file-list {
+            padding: 15px;
+        }
+
+        .file-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .file-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .file-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 5px;
+        }
+
+        .file-actions button {
+            margin-left: 5px;
+            background: none;
+            border: none;
+            color: #777;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .file-actions button:hover {
+            color: #333;
+        }
+
+        .add-file {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .add-file input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+        .add-file button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* 파일 노드 스타일 */
+        .file-node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            background-color: #ecf0f1;
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            z-index: 4;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.16);
+            transition: all 0.3s ease;
+            border: 1px solid #ddd;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-node:hover {
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            transform: translate(-50%, -50%) scale(1.05);
+            z-index: 6; /* 호버 시 다른 노드 위에 표시 */
+        }
+
+        /* 파일 노드 연결선 */
+        .file-branch {
+            position: absolute;
+            height: 1px;
+            transform-origin: left center;
+            background-color: #bdc3c7;
+            z-index: 3;
+        }
+
+        /* 파일 형식별 색상 */
+        .file-node.txt { border-left: 4px solid #3498db; }
+        .file-node.pdf { border-left: 4px solid #e74c3c; }
+        .file-node.ppt { border-left: 4px solid #f39c12; }
+        .file-node.docx { border-left: 4px solid #2ecc71; }
+        
+        /* 드래그 관련 스타일 */
+        .mindmap-container {
+            cursor: grab;
+        }
+        
+        .mindmap-container:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>전공 노트 관리</h1>
+        <div>
+            <button id="add-subject">새 주제 추가</button>
+            <button id="zoom-in">+</button>
+            <button id="zoom-out">-</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="mindmap-container">
+            <div class="mindmap">
+                <div class="center-node">전공 노트</div>
+                <!-- 노드와 연결선은 JavaScript로 동적 생성 -->
+            </div>
+        </div>
+        
+        <div class="files-panel" id="files-panel">
+            <div class="files-header">
+                <h3 id="subject-title">전공 파일</h3>
+                <button class="close-panel" id="close-panel">&times;</button>
+            </div>
+            <div class="file-list" id="file-list">
+                <!-- 파일 목록이 여기에 동적으로 추가됨 -->
+            </div>
+            <div class="add-file">
+                <input type="text" id="new-file-name" placeholder="새 파일 이름">
+                <button id="add-file-btn">추가</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 전공 데이터 (노드 정보) - 원본 데이터 유지
+        const subjects = [
+            { id: 'computer', name: '컴퓨터공학', angle: 0, distance: 200, color: '#e74c3c', 
+              files: ['알고리즘 기초.txt', '자료구조 요약.pdf', '프로그래밍 언어론.ppt'] },
+            { id: 'math', name: '수학', angle: 60, distance: 200, color: '#2ecc71',
+              files: ['미적분학 노트.txt', '선형대수 문제풀이.pdf', '확률과 통계.docx'] },
+            { id: 'physics', name: '물리학', angle: 120, distance: 200, color: '#f39c12',
+              files: ['역학 노트.pdf', '전자기학 정리.txt', '양자역학 기초.ppt'] },
+            { id: 'chemistry', name: '화학', angle: 180, distance: 200, color: '#9b59b6',
+              files: ['유기화학 반응.txt', '무기화학 요약.pdf', '분석화학 실험.docx'] },
+            { id: 'biology', name: '생물학', angle: 240, distance: 200, color: '#16a085',
+              files: ['세포생물학.pdf', '유전학 노트.txt', '생태계 분석.docx'] },
+            { id: 'literature', name: '문학', angle: 300, distance: 200, color: '#3498db',
+              files: ['현대시 분석.pdf', '소설의 이해.txt', '문학 비평.docx'] }
+        ];
+
+        // DOM 요소
+        const mindmap = document.querySelector('.mindmap');
+        const filesPanel = document.getElementById('files-panel');
+        const closePanel = document.getElementById('close-panel');
+        const subjectTitle = document.getElementById('subject-title');
+        const fileList = document.getElementById('file-list');
+        const newFileName = document.getElementById('new-file-name');
+        const addFileBtn = document.getElementById('add-file-btn');
+        
+        let currentSubject = null;
+        let scale = 1;
+
+        // 초기화: 마인드맵 생성
+        function initMindmap() {
+            // 중앙 노드부터 시작해서 방사형으로 확장
+            const centerNode = document.createElement('div');
+            centerNode.className = 'center-node';
+            centerNode.textContent = '전공 노트';
+            mindmap.appendChild(centerNode);
+            
+            // 각 주제 노드 및 파일 노드 생성
+            subjects.forEach(subject => {
+                // 브랜치(연결선) 생성
+                const branch = document.createElement('div');
+                branch.className = 'branch';
+                
+                const radians = subject.angle * Math.PI / 180;
+                branch.style.width = `${subject.distance}px`;
+                branch.style.transform = `rotate(${subject.angle}deg)`;
+                
+                mindmap.appendChild(branch);
+                
+                // 노드(주제) 생성
+                const node = document.createElement('div');
+                node.className = `node ${subject.id}`;
+                node.textContent = subject.name;
+                node.dataset.id = subject.id;
+                
+                // 위치 계산 - 중앙에서 방사형으로
+                const x = Math.cos(radians) * subject.distance;
+                const y = Math.sin(radians) * subject.distance;
+                node.style.left = `calc(50% + ${x}px)`;
+                node.style.top = `calc(50% - ${y}px)`; // y축은 반대로
+                
+                node.addEventListener('click', () => {
+                    openFilesPanel(subject);
+                });
+                
+                mindmap.appendChild(node);
+                
+                // 파일 노드 생성
+                if (subject.files && subject.files.length > 0) {
+                    createFileNodes(subject, x, y);
+                }
+            });
+            
+            // 초기 위치 및 스케일 설정
+            offsetX = -50;
+            offsetY = -50;
+            mindmap.style.transform = `translate(${offsetX}%, ${offsetY}%) scale(${scale})`;
+        }
+
+        // 파일 패널 열기
+        function openFilesPanel(subject) {
+            currentSubject = subject;
+            subjectTitle.textContent = `${subject.name} 파일`;
+            
+            // 파일 목록 생성
+            fileList.innerHTML = '';
+            subject.files.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                
+                const fileName = document.createElement('div');
+                fileName.textContent = file;
+                fileItem.appendChild(fileName);
+                
+                const fileActions = document.createElement('div');
+                fileActions.className = 'file-actions';
+                
+                const editBtn = document.createElement('button');
+                editBtn.textContent = '수정';
+                editBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // 파일 수정 로직 (간단한 예시)
+                    const newName = prompt('파일 이름 수정:', file);
+                    if (newName && newName !== file) {
+                        const index = subject.files.indexOf(file);
+                        subject.files[index] = newName;
+                        openFilesPanel(subject); // 목록 갱신
+                    }
+                });
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = '삭제';
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // 파일 삭제 로직
+                    if (confirm(`${file}을(를) 삭제하시겠습니까?`)) {
+                        const index = subject.files.indexOf(file);
+                        subject.files.splice(index, 1);
+                        openFilesPanel(subject); // 목록 갱신
+                    }
+                });
+                
+                fileActions.appendChild(editBtn);
+                fileActions.appendChild(deleteBtn);
+                fileItem.appendChild(fileActions);
+                
+                fileItem.addEventListener('click', () => {
+                    // 파일 열기 (여기서는 간단히 알림으로 대체)
+                    alert(`${file} 파일을 엽니다.`);
+                });
+                
+                fileList.appendChild(fileItem);
+            });
+            
+            // 패널 표시
+            filesPanel.classList.add('active');
+        }
+
+        // 패널 닫기
+        closePanel.addEventListener('click', () => {
+            filesPanel.classList.remove('active');
+        });
+
+        // 새 파일 추가
+        addFileBtn.addEventListener('click', () => {
+            const fileName = newFileName.value.trim();
+            if (fileName && currentSubject) {
+                currentSubject.files.push(fileName);
+                newFileName.value = '';
+                
+                // 기존 파일 노드들 제거
+                const existingFileNodes = document.querySelectorAll(`.file-node[data-subject="${currentSubject.id}"]`);
+                existingFileNodes.forEach(node => node.remove());
+                
+                const existingFileBranches = document.querySelectorAll(`.file-branch[data-subject="${currentSubject.id}"]`);
+                existingFileBranches.forEach(branch => branch.remove());
+                
+                // 부모 노드 위치 계산
+                const radians = currentSubject.angle * Math.PI / 180;
+                const x = Math.cos(radians) * currentSubject.distance;
+                const y = Math.sin(radians) * currentSubject.distance;
+                
+                // 새로운 파일 노드 생성
+                createFileNodes(currentSubject, x, y);
+                
+                // 패널 업데이트
+                openFilesPanel(currentSubject);
+            }
+        });
+
+        // 새 주제(노드) 추가
+        document.getElementById('add-subject').addEventListener('click', () => {
+            const subjectName = prompt('새 주제 이름을 입력하세요:');
+            if (subjectName) {
+                addNewSubject(subjectName);
+            }
+        });
+
+        // 새 주제 추가 함수
+        function addNewSubject(name) {
+            // ID 생성 (이름에서 공백 제거하고 소문자로)
+            const id = name.toLowerCase().replace(/\s+/g, '_');
+            
+            // 새로운 각도 계산 (기존 노드 사이에 균등하게 배치)
+            let newAngle = 0;
+            if (subjects.length > 0) {
+                // 모든 각도를 정렬
+                const angles = subjects.map(s => s.angle).sort((a, b) => a - b);
+                // 가장 큰 간격 찾기
+                let maxGap = 360 - angles[angles.length - 1] + angles[0];
+                let insertAngle = (angles[angles.length - 1] + angles[0]) / 2;
+                
+                if (insertAngle < angles[0]) {
+                    insertAngle += 360;
+                }
+                
+                if (insertAngle >= 360) {
+                    insertAngle -= 360;
+                }
+                
+                // 각도 사이의 가장 큰 간격 찾기
+                for (let i = 0; i < angles.length - 1; i++) {
+                    const gap = angles[i + 1] - angles[i];
+                    if (gap > maxGap) {
+                        maxGap = gap;
+                        insertAngle = (angles[i] + angles[i + 1]) / 2;
+                    }
+                }
+                
+                newAngle = insertAngle;
+            }
+            
+            // 색상 랜덤 선택 (미리 정의된 색상 배열에서)
+            const colors = ['#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#16a085', '#3498db', '#e67e22', '#1abc9c'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            // 새 주제 객체 생성
+            const newSubject = {
+                id: id,
+                name: name,
+                angle: newAngle,
+                distance: 200, // 기본 거리
+                color: color,
+                files: [] // 빈 파일 목록으로 시작
+            };
+            
+            // 주제 배열에 추가
+            subjects.push(newSubject);
+            
+            // 시각적 요소 추가 (브랜치와 노드)
+            // 브랜치(연결선) 생성
+            const branch = document.createElement('div');
+            branch.className = 'branch';
+            
+            const radians = newSubject.angle * Math.PI / 180;
+            branch.style.width = `${newSubject.distance}px`;
+            branch.style.transform = `rotate(${newSubject.angle}deg)`;
+            
+            mindmap.appendChild(branch);
+            
+            // 노드(주제) 생성
+            const node = document.createElement('div');
+            node.className = `node ${newSubject.id}`;
+            node.textContent = newSubject.name;
+            node.dataset.id = newSubject.id;
+            node.style.backgroundColor = newSubject.color;
+            
+            // 위치 계산
+            const x = Math.cos(radians) * newSubject.distance;
+            const y = Math.sin(radians) * newSubject.distance;
+            node.style.left = `calc(50% + ${x}px)`;
+            node.style.top = `calc(50% - ${y}px)`; // y축은 반대로
+            
+            // 클릭 이벤트
+            node.addEventListener('click', () => {
+                openFilesPanel(newSubject);
+            });
+            
+            mindmap.appendChild(node);
+        }
+
+        // 마인드맵 드래그 관련 변수
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        // 파일 노드 생성 함수
+        function createFileNodes(subject, parentX, parentY) {
+            const fileCount = subject.files.length;
+            
+            // 주 각도는 부모 노드의 각도와 동일 (중심에서 바깥으로 확장)
+            const mainAngle = subject.angle;
+            
+            // 파일 노드의 각도 범위를 조정하여 적절히 펼치기
+            const spreadAngle = Math.min(30, 360 / subjects.length / 2);
+            const angleStart = mainAngle - spreadAngle;
+            const angleEnd = mainAngle + spreadAngle;
+            
+            subject.files.forEach((file, index) => {
+                // 파일마다 고유 ID 생성
+                const fileId = `${subject.id}_file_${index}`;
+                
+                // 파일 각도 계산 - 주제 노드의 방향을 따름
+                let fileAngle = mainAngle;
+                if (fileCount > 1) {
+                    fileAngle = angleStart + ((angleEnd - angleStart) / (fileCount - 1)) * index;
+                }
+                
+                // 방사형 배치를 위한 거리 계산 - 중심으로부터의 거리
+                // 주제 노드보다 더 멀게 배치 (이미지처럼 바깥쪽에 배치)
+                const subjectDistance = subject.distance;
+                const fileDistance = subjectDistance + 150; // 주제 노드보다 더 멀리 배치
+                
+                // 중심(전공 노트)으로부터의 파일 노드 위치 계산
+                const fileRadians = fileAngle * Math.PI / 180;
+                const fileX = Math.cos(fileRadians) * fileDistance;
+                const fileY = Math.sin(fileRadians) * fileDistance;
+                
+                // 파일 확장자 확인 (스타일링 목적)
+                const extension = file.split('.').pop().toLowerCase();
+                
+                // 파일 노드 연결선 생성 - 중심에서 직접 연결이 아니라 주제 노드에서 파일 노드로 연결
+                const fileBranch = document.createElement('div');
+                fileBranch.className = 'file-branch';
+                fileBranch.dataset.subject = subject.id;
+                
+                // 주제 노드와 파일 노드 사이의 거리
+                const branchLength = Math.sqrt(
+                    Math.pow(fileX - parentX, 2) + 
+                    Math.pow(fileY - parentY, 2)
+                );
+                
+                // 연결선 위치와 회전 계산
+                const branchAngle = Math.atan2(fileY - parentY, fileX - parentX) * 180 / Math.PI;
+                
+                fileBranch.style.width = `${branchLength}px`;
+                fileBranch.style.left = `calc(50% + ${parentX}px)`;
+                fileBranch.style.top = `calc(50% - ${parentY}px)`;
+                fileBranch.style.transform = `rotate(${branchAngle}deg)`;
+                mindmap.appendChild(fileBranch);
+                
+                // 파일 노드 생성 - 중심으로부터 직접 위치 계산
+                const fileNode = document.createElement('div');
+                fileNode.className = `file-node ${extension}`;
+                fileNode.textContent = file;
+                fileNode.dataset.id = fileId;
+                fileNode.dataset.subject = subject.id;
+                fileNode.dataset.fileName = file;
+                
+                fileNode.style.left = `calc(50% + ${fileX}px)`;
+                fileNode.style.top = `calc(50% - ${fileY}px)`;
+                
+                // 클릭 이벤트 (파일 열기)
+                fileNode.addEventListener('click', (e) => {
+                    if (isDragging) return;
+                    alert(`${file} 파일을 엽니다.`);
+                    e.stopPropagation();
+                });
+                
+                mindmap.appendChild(fileNode);
+            });
+        }
+        
+        // 드래그 기능 구현
+        const mindmapContainer = document.querySelector('.mindmap-container');
+        
+        mindmapContainer.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            
+            // 현재 transform 값에서 translate 값 추출
+            const transform = window.getComputedStyle(mindmap).transform;
+            const matrix = new DOMMatrixReadOnly(transform);
+            offsetX = matrix.m41;
+            offsetY = matrix.m42;
+            
+            mindmapContainer.style.cursor = 'grabbing';
+            e.preventDefault(); // 텍스트 선택 방지
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const dx = e.clientX - dragStartX;
+            const dy = e.clientY - dragStartY;
+            
+            // 기존 스케일 유지하면서 위치만 변경
+            mindmap.style.transform = `translate(${offsetX + dx}px, ${offsetY + dy}px) scale(${scale})`;
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            mindmapContainer.style.cursor = 'grab';
+            
+            // 현재 transform 값을 저장하여 다음 드래그에 사용
+            const transform = window.getComputedStyle(mindmap).transform;
+            const matrix = new DOMMatrixReadOnly(transform);
+            offsetX = matrix.m41;
+            offsetY = matrix.m42;
+        });
+        
+        // 줌 기능 수정 - 현재 위치 유지하면서 확대/축소
+        document.getElementById('zoom-in').addEventListener('click', () => {
+            scale += 0.1;
+            mindmap.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+        });
+
+        document.getElementById('zoom-out').addEventListener('click', () => {
+            scale = Math.max(0.5, scale - 0.1);
+            mindmap.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+        });
+        
+        // 초기화
+        initMindmap();
+    </script>
+</body>
+</html>
