@@ -104,34 +104,36 @@ main {
 }
 
 .weather-section {
-    /* grid-area: weather; */
+    grid-area: weather;
     display: flex;
-    max-width: 300px;
-    min-height: 450px;
     flex-direction: column;
-    float: left;
     gap: 20px;
+    min-height: 400px;
+    float: left;
 }
 
 .weather-content {
+    margin: 2px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    min-height: 450px;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-    padding: 20px;
-    position: relative;
-    background-color: #f8f9fa;
-    border-radius: 8px;
 }
 
 .weather-image {
-    /* position: absolute; */
-    width: flex;
-    height: flex;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 180px;
+    height: 180px;
     border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 .weather-back {
     width: 100%;
@@ -145,6 +147,11 @@ main {
 .weather {
     padding: 20px;
     backdrop-filter: blur(10px);
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 1;
 }
 
 
