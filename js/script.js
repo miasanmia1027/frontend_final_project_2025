@@ -36,27 +36,43 @@ const quotes = [
 ];
 
 // 날씨 정보 가져오기
-async function getWeather() {
+function getWeather() {
     const weatherInfo = document.getElementById('weather-info');
-    weatherInfo.textContent = "날씨 정보를 불러오는 중...";
+    const weatherIcon = document.getElementById('weather-icon');
     
-    try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=YOUR_API_KEY`);
-        const data = await response.json();
-        weatherInfo.textContent = `현재 기온: ${Math.round(data.main.temp - 273.15)}°C, ${data.weather[0].description}`;
-    } catch (error) {
-        weatherInfo.textContent = "날씨 정보를 불러올 수 없습니다.";
+    // 현재 시간에 따른 날씨 설정
+    const hour = new Date().getHours();
+    let weatherImage = 'sunny.jpg';
+    let weatherDesc = '';
+    
+    if (hour >= 6 && hour < 18) {
+        // 낮 시간대
+        weatherImage = 'sunny.jpg';
+        weatherDesc = '맑음';
+    } else if (hour >= 18 || hour < 6) {
+        // 밤 시간대
+        weatherImage = 'cloudy.jpg';
+        weatherDesc = '흐림';
     }
+    
+    // 랜덤하게 비 소식 추가
+    if (Math.random() < 0.3) {
+        weatherImage = 'rainy.jpg';
+        weatherDesc = '비';
+    }
+    
+    weatherIcon.src = `../assets/weather/${weatherImage}`;
+    weatherInfo.textContent = `현재 날씨: ${weatherDesc}`;
 }
 
 // 음악 추천 데이터
-const musicRecommendations = [
-    "BTS - Dynamite",
-    "IU - Celebrity",
-    "NewJeans - Hype Boy",
-    "LE SSERAFIM - UNFORGIVEN",
-    "IVE - I AM"
-];
+// const musicRecommendations = [
+//     "BTS - Dynamite",
+//     "IU - Celebrity",
+//     "NewJeans - Hype Boy",
+//     "LE SSERAFIM - UNFORGIVEN",
+//     "IVE - I AM"
+// ];
 
 // 랜덤 요소 선택 함수
 function getRandomElement(array) {

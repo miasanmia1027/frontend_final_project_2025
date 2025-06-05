@@ -21,13 +21,25 @@
       </div>
     </nav>
 
+
+
     <div class="container">
       <main>
         <section class="weather-section">
-          <h2>오늘의 날씨</h2>
+          <h2>Today's weather</h2>
           <div class="weather-content">
-            <div id="weather-info">로딩중...</div>
-          </div>
+            <div class="weather-image">
+              <img
+                src="../assets/weather/sunny.jpg"
+                alt="날씨"
+                id="weather-icon"
+              />
+            </div>
+            <div class="weather-back">
+              <div class="weather">
+                22도
+              </div>
+            </div>
         </section>
 
         <section class="calendar-grid-section">
@@ -76,25 +88,29 @@
             </div>
           </div>
         </section>
-
-        <section class="fortune-section">
-          <h2>오늘의 운세</h2>
-          <div class="fortune-content">
-            <div class="zodiac-sign">
-              <h3>별자리 운세</h3>
-              <p id="zodiac-fortune">로딩중...</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="quote-section">
-          <h2>오늘의 명언</h2>
-          <div class="quote-content">
-            <p id="quote-author"></p>
-          </div>
-        </section>
       </main>
     </div>
+
+    <section class="fortune-section">
+      <h2>Fortune</h2>
+      <div class="fortune-content">
+        <div class="zodiac-sign">
+          <h3>별자리 운세</h3>
+          <p id="zodiac-fortune">로딩중...</p>
+        </div>
+      </div>
+    </section>
+
+       
+
+<section class="quote-section">
+  <h2>Quote</h2>
+  <div class="quote-content">
+    <p id="quote-author"></p>
+  </div>
+</section>
+
+
     <script src="../js/script.js"></script>
     <script>
       const albumCover = document.querySelector(".album-cover");
@@ -172,5 +188,6 @@
       // Initial song load
       loadSong(recommendedSongs[currentSongIndex]);
     </script>
+    
   </body>
 </html>

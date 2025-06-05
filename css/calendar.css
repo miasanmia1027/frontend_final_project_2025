@@ -1,8 +1,7 @@
 /* calendar.css */
 
 .calendar-container {
-    display: flex;
-    height: calc(100vh - 140px); /* Adjust based on header/footer height */
+    display: flex; /* Adjust based on header/footer height */
 }
 
 .sidebar {
@@ -62,6 +61,8 @@
     flex-grow: 1;
     padding: 20px;
     display: flex;
+    max-width: 300px;
+    min-height: 450px;
     flex-direction: column;
 }
 
