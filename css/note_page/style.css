@@ -334,3 +334,122 @@ header {
 .dragging {
     opacity: 0.5;
 }
+
+/* 뷰 전환 버튼 스타일 */
+.view-toggle {
+    display: flex;
+    margin-left: 20px;
+}
+
+.view-btn {
+    padding: 6px 12px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.view-btn:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.view-btn:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-left: none;
+}
+
+.view-btn.active {
+    background-color: #1976d2;
+    color: white;
+}
+
+/* 그래프 뷰 컨테이너 */
+.graph-container {
+    display: none;
+    position: relative;
+}
+
+.graph-container.active {
+    display: block;
+}
+
+#graph-view {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #181818;
+}
+
+.graph-controls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.graph-controls button {
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 0 2px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* 노드 스타일 */
+.node circle {
+    stroke: #fff;
+    stroke-width: 2px;
+    cursor: pointer;
+}
+
+.node text {
+    font-size: 12px;
+    fill: #fff;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+.link {
+    stroke: #999;
+    stroke-opacity: 0.6;
+}
+
+/* 리스트 뷰 컨테이너 */
+.list-container {
+    display: flex;
+}
+
+.list-container.hidden {
+    display: none;
+}
+
+/* 파일 편집 관련 스타일 */
+#file-content {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 14px;
+    resize: none;
+}
+
+.file-info {
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: #777;
+}
+
+/* 다운로드 버튼 스타일 */
+#download-file-btn {
+    background-color: #28a745;
+}
