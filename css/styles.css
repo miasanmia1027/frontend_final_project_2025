@@ -13,6 +13,9 @@ body {
 }
 
 .container {
+    font-family: 'YUniverse-B';
+    font-weight: 300;
+    font-size: large;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -175,10 +178,28 @@ main {
 
 .fortune-section {
     grid-area: fortune;
+    font-family: 'YUniverse-B';
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
 }
 
 .quote-section {
     grid-area: quote;
+    font-family: 'YUniverse-B';
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
 }
 
 section {
@@ -208,7 +229,7 @@ h2 {
 .side-panels h3 {
     color: #2c3e50;
     margin-bottom: 10px;
-    font-size: 1.1em;
+    font-size: 1.5em;
 }
 
 @media (max-width: 768px) {
@@ -233,6 +254,12 @@ h2 {
 @font-face {
     font-family: 'S-CoreDream-3Light';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'YUniverse-B';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_yuniverse@1.0/YUniverse-B.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
