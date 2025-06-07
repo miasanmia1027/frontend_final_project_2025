@@ -4,23 +4,23 @@ if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const email = document.getElementById('email').value;
+        const nickname = document.getElementById('nickname').value;
         const password = document.getElementById('password').value;
 
         try {
             // TODO: 실제 백엔드 API 연동
-            console.log('로그인 시도:', { email, password });
+            console.log('로그인 시도:', { nickname, password });
             
             // 임시 로그인 성공 처리
             localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userNickname', nickname);
             
             alert('로그인 성공!');
-            window.location.href = 'index.html';
+            window.location.href = '../main_page/index.html';
         } catch (error) {
             const shouldSignup = confirm('로그인에 실패했습니다. 회원가입을 하시겠습니까?');
             if (shouldSignup) {
-                window.location.href = 'signup.html';
+                window.location.href = '../signup_page/signup.html';
             }
             console.error('로그인 에러:', error);
         }
@@ -33,7 +33,6 @@ if (signupForm) {
     signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const name = document.getElementById('name').value;
         const nickname = document.getElementById('nickname').value;
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
@@ -46,15 +45,14 @@ if (signupForm) {
 
         try {
             // TODO: 실제 백엔드 API 연동
-            console.log('회원가입 시도:', { name, nickname, email, password });
+            console.log('회원가입 시도:', { nickname, email, password });
             
             // 임시 회원가입 성공 처리
-            localStorage.setItem('userName', name);
             localStorage.setItem('userNickname', nickname);
             localStorage.setItem('userEmail', email);
             
             alert('회원가입이 완료되었습니다!');
-            window.location.href = 'login.html';
+            window.location.href = '../login_page/login.html';
         } catch (error) {
             alert('회원가입에 실패했습니다. 다시 시도해주세요.');
             console.error('회원가입 에러:', error);
@@ -77,13 +75,13 @@ function updateAuthUI() {
                 localStorage.removeItem('userEmail');
                 localStorage.removeItem('userName');
                 localStorage.removeItem('userNickname');
-                window.location.href = 'login.html';
+                window.location.href = '../login_page/login.html';
             });
         }
     } else {
         if (loginLink) {
             loginLink.textContent = '로그인';
-            loginLink.href = 'login.html';
+            loginLink.href = '../login_page/login.html';
         }
     }
 }
@@ -96,7 +94,7 @@ function checkAuth() {
     
     if (!publicPages.includes(currentPage) && !isLoggedIn) {
         alert('이 페이지를 이용하려면 로그인이 필요합니다.');
-        window.location.href = 'login.html';
+        window.location.href = '../login_page/login.html';
         return false;
     }
     return true;

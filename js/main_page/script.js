@@ -27,7 +27,7 @@ function updateDate() {
   
     const weather = weatherTypes[Math.floor(Math.random() * weatherTypes.length)];
   
-    if (weatherIcon) weatherIcon.src = `../assets/weather/${weather.image}`;
+    if (weatherIcon) weatherIcon.src = `../../assets/weather/${weather.image}`;
     if (weatherInfo) weatherInfo.textContent = `현재 날씨: ${weather.desc}`;
     if (tempText) tempText.textContent = weather.temp;
   }
