@@ -1,0 +1,99 @@
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 60px);
+    padding: 20px;
+}
+
+.auth-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-box h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-family: 'YUniverse-B';
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: #2c3e50;
+    font-size: 0.9em;
+}
+
+.form-group input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #bbe309;
+}
+
+.auth-button {
+    background-color: #bbe309;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+    background-color: #a3c908;
+}
+
+.auth-links {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.auth-link {
+    color: #7f8c8d;
+    font-size: 0.95em;
+}
+
+.signup-link {
+    color: #bbe309;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 5px 10px;
+    border: 2px solid #bbe309;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.signup-link:hover {
+    background-color: #bbe309;
+    color: white;
+    text-decoration: none;
+}
+
+.top-nav a.active {
+    background-color: #bbe309;
+    color: white;
+} 
