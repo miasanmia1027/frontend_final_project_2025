@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전공 노트 관리</title>
+    <link rel="stylesheet" href="../../css/note_page/style.css">
+</head>
+<body>
+    <header>
+        <h1>전공 노트 관리</h1>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="파일 또는 전공 검색">
+            <button id="search-btn">🔍</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <ul class="tree-menu" id="subjects-tree">
+                <!-- 전공 트리 메뉴 여기에 추가됨 -->
+            </ul>
+        </aside>
+
+        <main class="content">
+            <div class="content-header">
+                <h2 class="content-title">
+                    <span class="content-title-color" id="current-color"></span>
+                    <span id="current-title">모든 파일</span>
+                </h2>
+                <div class="action-buttons">
+                    <button id="add-file-btn">파일 추가</button>
+                    <button id="add-subject-btn">전공 추가</button>
+                </div>
+            </div>
+
+            <div class="files-grid" id="files-grid">
+                <!-- 파일 카드들이 여기에 표시됨 -->
+            </div>
+        </main>
+    </div>
+
+    <!-- 새 전공 추가 모달 -->
+    <div class="modal" id="add-subject-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>새 전공 추가</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="subject-name">전공 이름</label>
+                    <input type="text" id="subject-name" placeholder="전공 이름 입력">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close-btn">취소</button>
+                <button class="btn btn-primary" id="save-subject-btn">추가</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 새 파일 추가 모달 -->
+    <div class="modal" id="add-file-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>새 파일 추가</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="file-name">파일 이름</label>
+                    <input type="text" id="file-name" placeholder="파일 이름 입력">
+                </div>
+                <div class="form-group">
+                    <label for="file-type">파일 형식</label>
+                    <select id="file-type">
+                        <option value="txt">텍스트 (.txt)</option>
+                        <option value="pdf">PDF (.pdf)</option>
+                        <option value="docx">Word (.docx)</option>
+                        <option value="ppt">PowerPoint (.ppt)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="file-subject">전공 선택</label>
+                    <select id="file-subject">
+                        <!-- 전공 목록이 여기에 추가됨 -->
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close-btn">취소</button>
+                <button class="btn btn-primary" id="save-file-btn">추가</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/note_page/main.js"></script>
+</body>
+</html>
