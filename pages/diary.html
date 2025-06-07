@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Daily Life - 일기</title>
+    <title>일기 - Daily Life</title>
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/music.css" />
     <link rel="stylesheet" href="../css/diary.css" />
@@ -17,8 +17,9 @@
       </div>
       <div class="nav-right">
         <a href="calendar.html" class="calendar">캘린더</a>
-        <a href="diary.html" class="Daily">일기</a>
+        <a href="diary.html" class="Daily active">일기</a>
         <a href="notes.html" class="memo">노트</a>
+        <a href="login.html" class="login">로그인</a>
       </div>
     </nav>
 
@@ -47,6 +48,7 @@
       <div id="entry-list"></div>
     </aside>
 
+    <script src="../js/auth.js"></script>
     <script src="../js/script.js"></script>
     <script>
       const subjectInput = document.querySelector(".diary-subject");

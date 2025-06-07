@@ -82,5 +82,22 @@ function updateAuthUI() {
     }
 }
 
-// 페이지 로드 시 로그인 상태 확인
-document.addEventListener('DOMContentLoaded', updateAuthUI); 
+// 페이지 접근 제어 함수
+function checkAuth() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const currentPage = window.location.pathname.split('/').pop();
+    const publicPages = ['index.html', 'login.html', 'signup.html'];
+    
+    if (!publicPages.includes(currentPage) && !isLoggedIn) {
+        alert('이 페이지를 이용하려면 로그인이 필요합니다.');
+        window.location.href = 'login.html';
+        return false;
+    }
+    return true;
+}
+
+// 페이지 로드 시 로그인 상태 확인 및 접근 제어
+document.addEventListener('DOMContentLoaded', () => {
+    updateAuthUI();
+    checkAuth();
+}); 
