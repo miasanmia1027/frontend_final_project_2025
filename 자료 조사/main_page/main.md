@@ -1,0 +1,1 @@
+https://designbase.co.kr/magazine/a-collection-of-web-design-friendly-websites/
