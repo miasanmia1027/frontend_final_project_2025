@@ -34,6 +34,7 @@ if (signupForm) {
         e.preventDefault();
         
         const name = document.getElementById('name').value;
+        const nickname = document.getElementById('nickname').value;
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
@@ -45,7 +46,12 @@ if (signupForm) {
 
         try {
             // TODO: 실제 백엔드 API 연동
-            console.log('회원가입 시도:', { name, email, password });
+            console.log('회원가입 시도:', { name, nickname, email, password });
+            
+            // 임시 회원가입 성공 처리
+            localStorage.setItem('userName', name);
+            localStorage.setItem('userNickname', nickname);
+            localStorage.setItem('userEmail', email);
             
             alert('회원가입이 완료되었습니다!');
             window.location.href = 'login.html';
@@ -60,7 +66,7 @@ if (signupForm) {
 function updateAuthUI() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     const loginLink = document.querySelector('.login');
-    const signupLink = document.querySelector('.signup');
+    const userNickname = localStorage.getItem('userNickname');
 
     if (isLoggedIn) {
         if (loginLink) {
@@ -69,16 +75,16 @@ function updateAuthUI() {
                 e.preventDefault();
                 localStorage.removeItem('isLoggedIn');
                 localStorage.removeItem('userEmail');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('userNickname');
                 window.location.href = 'login.html';
             });
         }
-        if (signupLink) signupLink.style.display = 'none';
     } else {
         if (loginLink) {
             loginLink.textContent = '로그인';
             loginLink.href = 'login.html';
         }
-        if (signupLink) signupLink.style.display = 'inline-block';
     }
 }
 
