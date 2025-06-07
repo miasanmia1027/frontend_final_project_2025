@@ -41,24 +41,19 @@
       </div>
     </div>
 
+    <!-- 사이드바: 작성한 일기 목록 -->
+    <aside class="sidebar" id="diary-sidebar">
+      <h2>작성한 일기</h2>
+      <div id="entry-list"></div>
+    </aside>
+
     <script src="../js/script.js"></script>
     <script>
-      document.querySelector(".save-button").addEventListener("click", () => {
-        const subject = document.querySelector(".diary-subject").value.trim();
-        const content = document.querySelector(".diary-textarea").value.trim();
-
-        if (!subject) {
-          alert("제목을 입력해주세요");
-          return;
-        }
-
-        if (!content) {
-          alert("일기를 입력해주세요");
-          return;
-        }
-
-        alert(`"${subject}" 제목으로 일기가 임시 저장되었습니다!`);
-      });
+      const subjectInput = document.querySelector(".diary-subject");
+      const contentInput = document.querySelector(".diary-textarea");
+      const saveButton = document.querySelector(".save-button");
+      const sidebar = document.getElementById("diary-sidebar");
+      const entryList = document.getElementById("entry-list");
 
       // 날짜 표시
       document.addEventListener("DOMContentLoaded", () => {
@@ -71,6 +66,37 @@
         };
         document.getElementById("current-date").textContent =
           now.toLocaleDateString("ko-KR", options);
+      });
+
+      saveButton.addEventListener("click", () => {
+        const subject = subjectInput.value.trim();
+        const content = contentInput.value.trim();
+
+        if (!subject) return alert("제목을 입력해주세요 ✏️");
+        if (!content) return alert("일기를 입력해주세요 📝");
+
+        const now = new Date();
+        const dateText = now.toLocaleDateString("ko-KR", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        });
+
+        // 사이드바 보이기
+        sidebar.style.display = "block";
+
+        // 항목 추가
+        const entry = document.createElement("div");
+        entry.className = "entry-item";
+        entry.innerHTML = `
+          <time>${dateText}</time>
+          <span>${subject}</span>
+        `;
+        entryList.prepend(entry);
+
+        alert("일기가 저장되었습니다!");
+        subjectInput.value = "";
+        contentInput.value = "";
       });
     </script>
   </body>

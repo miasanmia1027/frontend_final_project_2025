@@ -8,14 +8,16 @@
   }
   
   .diary-title {
-    font-family: 'S-CoreDream-3Light';
+    font-family: 'YUniverse-B';
     text-align: center;
     margin-bottom: 20px;
-    font-size: 1.8em;
+    font-size: 2.0em;
+    font-weight: bold;
     color: 	#32CD32;
   }
   
   .diary-date {
+    font-family: 'S-CoreDream-3Light';
     text-align: center;
     font-size: 1em;
     color: #777;
@@ -63,9 +65,43 @@
     background-color:	#32CD32;
   }
   
-  @font-face {
-    font-family: 'S-CoreDream-3Light';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+  .sidebar {
+    position: fixed;
+    top: 70px;
+    right: 0;
+    width: 250px;
+    background-color: #ffffff;
+    border-left: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.05);
+    padding: 20px;
+    height: calc(100% - 70px);
+    overflow-y: auto;
+    display: none;
+    z-index: 999;
+  }
+  
+  .sidebar h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color:#32CD32;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+  }
+  
+  .entry-item {
+    margin-bottom: 15px;
+  }
+  
+  .entry-item time {
+    font-size: 0.85em;
+    color: #888;
+    display: block;
+    margin-bottom: 3px;
+  }
+  
+  .entry-item span {
+    font-weight: bold;
+    color: #333;
+  }
+  
