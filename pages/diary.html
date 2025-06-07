@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Daily Life - 일기</title>
     <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/music.css" />
+    <link rel="stylesheet" href="../css/diary.css" />
   </head>
   <body>
     <nav class="top-nav">
@@ -21,15 +23,41 @@
     </nav>
 
     <div class="container">
-      <header>
-        <h1>일기</h1>
-      </header>
-
-      <main>
-        <!-- 일기 내용이 여기에 들어갑니다 -->
-        <p>일기 페이지 내용</p>
-      </main>
+      <div class="diary-wrapper">
+        <h1 class="diary-title">🌿 오늘의 일기</h1>
+        <div class="diary-date" id="current-date">날짜 로딩 중...</div>
+        <textarea
+          class="diary-textarea"
+          placeholder="오늘 하루는 어땠나요? 감정을 자유롭게 적어보세요 :D"
+        ></textarea>
+        <button class="save-button">저장</button>
+      </div>
     </div>
+
     <script src="../js/script.js"></script>
+    <script>
+      // 저장 버튼 이벤트
+      document.querySelector(".save-button").addEventListener("click", () => {
+        const content = document.querySelector(".diary-textarea").value.trim();
+        if (content) {
+          alert("일기가 임시 저장되었습니다! (향후 기능 확장 가능)");
+        } else {
+          alert("일기를 입력해주세요 📝");
+        }
+      });
+
+      // 날짜 표시
+      document.addEventListener("DOMContentLoaded", () => {
+        const now = new Date();
+        const options = {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          weekday: "long",
+        };
+        document.getElementById("current-date").textContent =
+          now.toLocaleDateString("ko-KR", options);
+      });
+    </script>
   </body>
 </html>

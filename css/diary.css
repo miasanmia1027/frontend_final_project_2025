@@ -1,0 +1,60 @@
+.diary-wrapper {
+    max-width: 800px;
+    margin: 80px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+  
+  .diary-title {
+    font-family: 'S-CoreDream-3Light';
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    color: #2980b9;
+  }
+  
+  .diary-date {
+    text-align: center;
+    font-size: 1em;
+    color: #777;
+    margin-bottom: 20px;
+  }
+  
+  .diary-textarea {
+    width: 100%;
+    height: 300px;
+    padding: 15px;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    resize: vertical;
+    font-family: 'S-CoreDream-3Light';
+    line-height: 1.6;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+  }
+  
+  .save-button {
+    margin-top: 20px;
+    float: right;
+    background-color: #74b9ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 1rem;
+  }
+  
+  .save-button:hover {
+    background-color: #3498db;
+  }
+  
+  @font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
