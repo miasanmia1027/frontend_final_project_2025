@@ -1,0 +1,595 @@
+/* 사이월드 스타일 CSS */
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+/* 기본 스타일 리셋 */
+.cyworld-body {
+    margin: 0;
+    padding: 0;
+    background-image: url('../../img/cyworld/cy-background.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Nanum Gothic', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* 미니홈피 전체 컨테이너 */
+.cy-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.cy-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+/* 미니홈피 헤더 스타일 */
+.cy-header {
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    padding: 15px;
+    position: relative;
+}
+
+.cy-header-today {
+    text-align: right;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.cy-header-today strong {
+    color: #ff5e5e;
+    font-weight: bold;
+}
+
+.cy-profile {
+    display: flex;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #ccc;
+}
+
+.cy-profile-photo {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #ddd;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-right: 15px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.cy-profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cy-profile-info h2 {
+    font-size: 18px;
+    margin: 0 0 5px 0;
+    color: #ff5e5e;
+}
+
+.cy-profile-info p {
+    font-size: 13px;
+    margin: 0;
+    color: #666;
+    font-style: italic;
+}
+
+.cy-bgm-player {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 3px;
+    margin-top: 10px;
+    padding: 5px 10px;
+}
+
+.cy-bgm-info {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.cy-bgm-info span {
+    font-weight: bold;
+    color: #ff5e5e;
+    white-space: nowrap;
+}
+
+.cy-bgm-info marquee {
+    width: 100%;
+    color: #666;
+}
+
+.cy-bgm-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.cy-bgm-controls button {
+    background: none;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    color: #666;
+    padding: 3px 5px;
+}
+
+.cy-bgm-controls button:hover {
+    color: #ff5e5e;
+}
+
+/* 본문 영역 */
+.cy-content {
+    display: flex;
+    padding: 15px;
+    gap: 15px;
+}
+
+/* 왼쪽 메뉴 영역 */
+.cy-left-area {
+    width: 230px;
+    flex-shrink: 0;
+}
+
+.cy-miniroom, .cy-menu, .cy-friends {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.cy-miniroom h3, .cy-menu h3, .cy-friends h3, .cy-guestbook h3 {
+    background: linear-gradient(to bottom, #74b0ff, #4d8bff);
+    color: white;
+    margin: 0;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+.cy-miniroom-content {
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.cy-miniroom-content img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.cy-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cy-menu li {
+    border-bottom: 1px solid #eee;
+}
+
+.cy-menu li:last-child {
+    border-bottom: none;
+}
+
+.cy-menu a {
+    display: block;
+    padding: 8px 12px;
+    color: #555;
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.cy-menu a:hover, .cy-menu a.active {
+    background-color: #e4f0ff;
+    color: #4d8bff;
+}
+
+.cy-menu a i {
+    margin-right: 5px;
+    width: 16px;
+    text-align: center;
+}
+
+.cy-friends ul {
+    list-style: none;
+    margin: 0;
+    padding: 5px 10px;
+}
+
+.cy-friends li {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    font-size: 12px;
+    color: #555;
+}
+
+.cy-friend-status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin-right: 5px;
+}
+
+.cy-friend-status.online {
+    background-color: #72cc50;
+}
+
+.cy-best-friend {
+    color: #ff5e5e;
+    margin-right: 3px;
+}
+
+/* 오른쪽 컨텐츠 영역 */
+.cy-right-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.cy-right-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #ccc;
+}
+
+.cy-search-box {
+    position: relative;
+    width: 250px;
+}
+
+.cy-search-box input {
+    width: 100%;
+    padding: 5px 30px 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+.cy-search-box button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #4d8bff;
+}
+
+.cy-view-toggle button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background: #f8f8f8;
+    cursor: pointer;
+    font-size: 12px;
+    border-radius: 0;
+}
+
+.cy-view-toggle button:first-child {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.cy-view-toggle button:last-child {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-left: none;
+}
+
+.cy-view-toggle button.active {
+    background: linear-gradient(to bottom, #74b0ff, #4d8bff);
+    color: white;
+    border-color: #4d8bff;
+}
+
+/* 메인 컨텐츠 영역 */
+.cy-main-content {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    background-color: #fff;
+}
+
+/* 사이월드 버튼 스타일 */
+.cy-btn {
+    background: linear-gradient(to bottom, #74b0ff, #4d8bff);
+    color: white !important;
+    border: 1px solid #4d8bff !important;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+.cy-btn:hover {
+    background: linear-gradient(to bottom, #4d8bff, #2e6dd9);
+}
+
+/* 트리 메뉴 사이월드 스타일 */
+.cy-tree-menu {
+    font-size: 12px;
+}
+
+.cy-tree-menu .tree-item-header {
+    border-radius: 0;
+    border-bottom: 1px dotted #eee;
+}
+
+.cy-tree-menu .tree-item-header:hover {
+    background-color: #e4f0ff;
+}
+
+.cy-tree-menu .tree-item-header.active {
+    background-color: #e4f0ff;
+    color: #4d8bff;
+}
+
+/* 방명록 스타일 */
+.cy-guestbook {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    background-color: #f8f8f8;
+}
+
+.cy-guestbook-entries {
+    padding: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.cy-guestbook-entry {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.cy-guestbook-profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.cy-guestbook-profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cy-guestbook-content {
+    flex: 1;
+    font-size: 12px;
+}
+
+.cy-guestbook-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.cy-guestbook-name {
+    font-weight: bold;
+    color: #4d8bff;
+}
+
+.cy-guestbook-date {
+    color: #999;
+    font-size: 11px;
+}
+
+.cy-guestbook-content p {
+    margin: 0;
+}
+
+.cy-guestbook-form {
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.cy-guestbook-form textarea {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 5px;
+    height: 60px;
+    resize: none;
+    font-size: 12px;
+}
+
+/* 파도타기 스타일 */
+.cy-wave {
+    border-top: 1px dashed #ccc;
+    padding: 10px 0;
+    font-size: 11px;
+    color: #777;
+    text-align: center;
+}
+
+.cy-wave a {
+    color: #4d8bff;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.cy-wave a:hover {
+    text-decoration: underline;
+}
+
+/* 스킨 선택기 */
+.cy-skin-selector {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.cy-skin-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(to bottom, #74b0ff, #4d8bff);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.cy-skin-options {
+    position: absolute;
+    bottom: 45px;
+    right: 0;
+    display: none;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.cy-skin-selector:hover .cy-skin-options {
+    display: flex;
+}
+
+.cy-skin-option {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+}
+
+/* 저작권 */
+.cy-copyright {
+    text-align: center;
+    font-size: 11px;
+    color: #fff;
+    padding: 5px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+}
+
+/* 사이월드 모달 스타일 오버라이드 */
+.cy-modal .modal-content {
+    border: 2px solid #4d8bff;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+.cy-modal .modal-header {
+    background: linear-gradient(to bottom, #74b0ff, #4d8bff);
+    color: white;
+}
+
+.cy-modal .modal-close {
+    color: white;
+}
+
+/* 스킨 클래스 */
+.cy-container.skin-pink .cy-miniroom h3,
+.cy-container.skin-pink .cy-menu h3,
+.cy-container.skin-pink .cy-friends h3,
+.cy-container.skin-pink .cy-guestbook h3,
+.cy-container.skin-pink .cy-btn,
+.cy-container.skin-pink .cy-view-toggle button.active {
+    background: linear-gradient(to bottom, #ff9ecf, #ff64b4);
+    border-color: #ff64b4;
+}
+
+.cy-container.skin-green .cy-miniroom h3,
+.cy-container.skin-green .cy-menu h3,
+.cy-container.skin-green .cy-friends h3,
+.cy-container.skin-green .cy-guestbook h3,
+.cy-container.skin-green .cy-btn,
+.cy-container.skin-green .cy-view-toggle button.active {
+    background: linear-gradient(to bottom, #a3e0a3, #64c264);
+    border-color: #64c264;
+}
+
+.cy-container.skin-orange .cy-miniroom h3,
+.cy-container.skin-orange .cy-menu h3,
+.cy-container.skin-orange .cy-friends h3,
+.cy-container.skin-orange .cy-guestbook h3,
+.cy-container.skin-orange .cy-btn,
+.cy-container.skin-orange .cy-view-toggle button.active {
+    background: linear-gradient(to bottom, #ffcd9e, #ff9c4d);
+    border-color: #ff9c4d;
+}
+
+/* 반응형 */
+@media (max-width: 800px) {
+    .cy-content {
+        flex-direction: column;
+    }
+    
+    .cy-left-area {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    .cy-miniroom {
+        height: auto;
+    }
+}
+
+/* 파일 카드와 기존 요소들의 사이월드 스타일 오버라이드 */
+.files-grid .file-card {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.files-grid .file-card:hover {
+    border-color: #4d8bff;
+}
+
+.files-grid .file-card-header {
+    background-color: #f8f8f8;
+}
+
+.files-grid .file-action-btn:hover {
+    background-color: #e4f0ff;
+    color: #4d8bff;
+}
