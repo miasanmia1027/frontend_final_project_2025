@@ -1,15 +1,25 @@
+<!-- 
+[홈페이지 전체 흐름]
+1. 화면 크기가 작으면 경고 메시지를 띄운다.
+2. 상단에 헤더(홈, 로그인, 설정, 사용자)를 배치한다.
+3. 메인 영역에 인사말과 이동 박스(메인페이지, 캘린더, 기록, 노트)를 보여준다.
+4. 각 박스 클릭 시 해당 페이지로 이동(현재는 # 링크).
+-->
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>Home Page</title>
+    <!-- 홈페이지 CSS 연결 -->
     <link rel="stylesheet" href="../../css/home_page/style.css">
 </head>
 <body>
+    <!-- 화면 크기 경고 메시지 -->
     <div id="screen-warning">
         화면 크기를 더 크게 해주세요
     </div>
-    <!-- 여기서 이제 헤드를 만들어보자 -->
+    <!-- 헤더(홈, 로그인, 설정, 사용자) -->
     <div class="header">
         <div class="home_page">
             <a href="#">Home</a>
@@ -26,7 +36,7 @@
             </div>
         </div>
     </div>
-    <!-- 이제는 인사와 박스들 -->
+    <!-- 메인(인사말 + 이동 박스) -->
     <div class="main_div">
         <div class="wellcome">
             <h1>안녕하세요. 안동건님</h1>

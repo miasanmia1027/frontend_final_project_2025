@@ -1,13 +1,26 @@
+<!-- 
+[플래너 페이지 전체 흐름]
+1. 헤더에 플래너 제목과 나무 성장(진행률) 시각화가 표시된다.
+2. 메인 영역은 달력(좌측)과 할 일(To-Do) 관리(우측)로 구성된다.
+3. 달력에서 날짜를 클릭하면 해당 날짜의 할 일 목록이 우측에 나타난다.
+4. 할 일 추가, 완료 체크, 삭제가 가능하다.
+5. 전체 할 일의 완료율에 따라 나무가 성장한다(진행률 표시).
+6. 모든 데이터는 localStorage에 저장되어 새로고침해도 유지된다.
+-->
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>캘린더 & 할 일 플래너</title>
+    <!-- 플래너 페이지 CSS 연결 -->
     <link rel="stylesheet" href="../../css/planner_page/planner_page.css">
 </head>
 <body>
+    <!-- 전체 컨테이너 -->
     <div class="container">
+        <!-- 헤더(타이틀, 나무 성장) -->
         <header>
             <h1>나의 플래너</h1>
             <div class="tree-section">
@@ -26,7 +39,9 @@
             </div>
         </header>
 
+        <!-- 메인(달력 + 할 일) -->
         <main>
+            <!-- 달력 섹션 -->
             <div class="calendar-section">
                 <div class="calendar-header">
                     <button id="prev-month">&lt;</button>
@@ -34,6 +49,7 @@
                     <button id="next-month">&gt;</button>
                 </div>
                 <div class="calendar-grid" id="calendar-grid">
+                    <!-- 요일 헤더 -->
                     <div class="day-header">일</div>
                     <div class="day-header">월</div>
                     <div class="day-header">화</div>
@@ -44,6 +60,7 @@
                 </div>
             </div>
 
+            <!-- 할 일 섹션 -->
             <div class="todo-section" id="todo-section">
                 <div class="todo-header">
                     <h3 id="selected-date">날짜를 선택하세요</h3>
@@ -58,6 +75,7 @@
         </main>
     </div>
 
+    <!-- 플래너 페이지 JS 연결 -->
     <script src="../../js/planner_page/planner_page.js"></script>
 </body>
 </html>

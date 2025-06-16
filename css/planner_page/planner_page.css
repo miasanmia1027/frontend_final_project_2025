@@ -1,9 +1,11 @@
+/* 전체 기본 스타일 초기화 */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* 바디 배경 및 폰트 설정 */
 body {
     font-family: 'Arial', sans-serif;
     background: linear-gradient(135deg, #74b9ff, #0984e3);
@@ -11,12 +13,14 @@ body {
     color: #333;
 }
 
+/* 전체 컨테이너 */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
+/* 헤더 스타일 */
 header {
     text-align: center;
     margin-bottom: 30px;
@@ -29,6 +33,7 @@ header h1 {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
+/* 나무 성장 섹션 */
 .tree-section {
     background: rgba(255,255,255,0.9);
     border-radius: 15px;
@@ -38,18 +43,21 @@ header h1 {
     color: #333;
 }
 
+/* 나무 컨테이너 */
 .tree-container {
     display: flex;
     justify-content: center;
     margin: 20px 0;
 }
 
+/* 나무(트렁크+잎) */
 .tree {
     position: relative;
     width: 80px;
     height: 120px;
 }
 
+/* 나무 몸통 */
 .trunk {
     position: absolute;
     bottom: 0;
@@ -61,6 +69,7 @@ header h1 {
     border-radius: 0 0 5px 5px;
 }
 
+/* 나뭇잎 기본 스타일 */
 .leaves {
     position: absolute;
     border-radius: 50%;
@@ -69,6 +78,7 @@ header h1 {
     transition: all 0.5s ease;
 }
 
+/* 잎 단계별 크기 및 위치 */
 .leaves.level-1 {
     width: 30px;
     height: 30px;
@@ -93,16 +103,19 @@ header h1 {
     transform: translateX(-50%);
 }
 
+/* 나무 성장 단계별 잎 보이기 */
 .tree.growth-1 .level-1 { opacity: 1; }
 .tree.growth-2 .level-1, .tree.growth-2 .level-2 { opacity: 1; }
 .tree.growth-3 .level-1, .tree.growth-3 .level-2, .tree.growth-3 .level-3 { opacity: 1; }
 
+/* 진행률 텍스트 */
 .progress-info {
     text-align: center;
     font-weight: bold;
     color: #27ae60;
 }
 
+/* 메인 레이아웃(달력+할일) */
 main {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -113,10 +126,12 @@ main {
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
+/* 달력 섹션 */
 .calendar-section {
     min-height: 500px;
 }
 
+/* 달력 헤더(월 이동 버튼) */
 .calendar-header {
     display: flex;
     justify-content: space-between;
@@ -143,6 +158,7 @@ main {
     color: #333;
 }
 
+/* 달력 그리드 */
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -152,6 +168,7 @@ main {
     padding: 10px;
 }
 
+/* 요일 헤더 */
 .day-header {
     background: #74b9ff;
     color: white;
@@ -161,6 +178,7 @@ main {
     border-radius: 5px;
 }
 
+/* 날짜 셀 */
 .calendar-day {
     background: white;
     padding: 15px;
@@ -175,25 +193,30 @@ main {
     justify-content: space-between;
 }
 
+/* 날짜 셀 호버 효과 */
 .calendar-day:hover {
     background: #e3f2fd;
     transform: scale(1.05);
 }
 
+/* 선택된 날짜 */
 .calendar-day.selected {
     background: #74b9ff;
     color: white;
 }
 
+/* 이번 달이 아닌 날짜 */
 .calendar-day.other-month {
     color: #ccc;
     background: #f5f5f5;
 }
 
+/* 할 일 있는 날짜 표시 */
 .calendar-day.has-todos {
     border-left: 4px solid #27ae60;
 }
 
+/* 할 일 개수 뱃지 */
 .todo-count {
     font-size: 0.8em;
     background: #27ae60;
@@ -204,6 +227,7 @@ main {
     margin-top: 5px;
 }
 
+/* 할 일 섹션(숨김 기본) */
 .todo-section {
     background: #f8f9fa;
     border-radius: 10px;
@@ -211,10 +235,12 @@ main {
     display: none;
 }
 
+/* 할 일 섹션 활성화 */
 .todo-section.active {
     display: block;
 }
 
+/* 할 일 헤더 */
 .todo-header {
     display: flex;
     justify-content: space-between;
@@ -226,6 +252,7 @@ main {
     color: #333;
 }
 
+/* 할 일 닫기 버튼 */
 #close-todo {
     background: none;
     border: none;
@@ -234,6 +261,7 @@ main {
     color: #999;
 }
 
+/* 할 일 입력창 */
 .todo-input {
     display: flex;
     gap: 10px;
@@ -248,6 +276,7 @@ main {
     font-size: 14px;
 }
 
+/* 할 일 추가 버튼 */
 #add-todo {
     background: #74b9ff;
     color: white;
@@ -261,11 +290,13 @@ main {
     background: #0984e3;
 }
 
+/* 할 일 목록 */
 .todo-list {
     max-height: 400px;
     overflow-y: auto;
 }
 
+/* 할 일 아이템 */
 .todo-item {
     display: flex;
     justify-content: space-between;
@@ -277,16 +308,19 @@ main {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+/* 완료된 할 일 */
 .todo-item.completed {
     opacity: 0.6;
     text-decoration: line-through;
 }
 
+/* 할 일 텍스트 */
 .todo-text {
     flex: 1;
     margin-left: 10px;
 }
 
+/* 할 일 액션 버튼 */
 .todo-actions {
     display: flex;
     gap: 5px;
@@ -312,6 +346,7 @@ main {
     background: #f0f0f0;
 }
 
+/* 반응형(모바일) */
 @media (max-width: 768px) {
     main {
         grid-template-columns: 1fr;
