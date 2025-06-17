@@ -155,6 +155,7 @@ class PlannerApp {
         const todoElement = document.createElement('div');
         todoElement.className = `todo-item ${todo.completed ? 'completed' : ''}`;
 
+        // 체크박스, 텍스트, 삭제 버튼 포함
         todoElement.innerHTML = `
             <input type="checkbox" ${todo.completed ? 'checked' : ''} 
                    onchange="planner.toggleTodo('${dateString}', ${index})">

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="page-title">미니홈피</title>
     <style>
+        /* 전체 페이지 배경 및 폰트 설정 */
         body {
             font-family: 'Nanum Gothic', sans-serif;
             background-color: #d9d9d9;
@@ -33,7 +34,7 @@
             padding: 20px;
         }
         
-        /* 미니홈피 컨테이너 */
+        /* 미니홈피 메인 컨테이너 */
         .cyworld-container {
             width: 1000px;
             height: 700px;
@@ -48,6 +49,7 @@
             border-radius: 6px;
         }
         
+        /* 상단 헤더 영역 */
         .header {
             grid-column: 1 / 4;
             height: 30px;
@@ -60,6 +62,7 @@
             font-size: 12px;
         }
         
+        /* 왼쪽 패널(프로필, 로그인 등) */
         .left-panel {
             background-color: #f3f3f3;
             border-right: 1px solid #ddd;
@@ -70,6 +73,7 @@
             overflow-y: auto;
         }
         
+        /* 프로필 사진 영역 */
         .profile-pic {
             width: 80%;
             max-width: 150px;
@@ -90,6 +94,7 @@
             object-fit: cover;
         }
         
+        /* 로그인 관련 컨테이너 */
         .login-container {
             width: 100%;
             margin-top: 10px;
@@ -101,6 +106,7 @@
             text-align: center;
         }
         
+        /* 중앙 메인 컨텐츠(iframe) */
         .main-content {
             padding: 15px;
             overflow-y: auto;
@@ -109,6 +115,7 @@
             border-left: 1px solid #eee;
         }
         
+        /* 오른쪽 네비게이션 바 */
         .right-panel {
             background-color: #f8f8f8;
             border-left: 1px solid #ddd;
@@ -117,6 +124,7 @@
             flex-direction: column;
         }
         
+        /* 네비게이션 버튼 스타일 */
         .nav-button {
             padding: 10px 0;
             text-align: center;
@@ -131,6 +139,7 @@
             color: #6699cc;
         }
         
+        /* 방명록, 댓글 등 입력 영역 */
         .comment-box {
             margin-top: 15px;
             width: 100%;
@@ -182,14 +191,6 @@
             margin-left: auto;
         }
         
-        /* 창 컨트롤 버튼 컨테이너 */
-        .window-buttons {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            display: flex;
-        }
-        
         /* 창 컬러 버튼들 */
         .window-button {
             width: 16px;
@@ -231,7 +232,7 @@
             60%, 100% { content: "로딩중..."; }
         }
         
-        /* 반응형 디자인 - PC 크기별 일관성 유지 */
+        /* 반응형 디자인 */
         @media (min-width: 1200px) {
             .cyworld-container {
                 width: 95vw;
@@ -478,8 +479,11 @@
     </style>
 </head>
 <body>
+    <!-- 전체 페이지 컨테이너 -->
     <div class="page-container">
+        <!-- 미니홈피 메인 컨테이너 -->
         <div class="cyworld-container">
+            <!-- 상단 헤더 (창 컨트롤 버튼) -->
             <div class="header">
                 <div class="window-controls">
                     <div class="window-button" style="background-color: #ffcc00;"></div>
@@ -487,8 +491,7 @@
                     <div class="window-button" style="background-color: #ff6666;"></div>
                 </div>
             </div>
-            
-            <!-- 왼쪽 로그인 패널 (고정) -->
+            <!-- 왼쪽 로그인/프로필 패널 -->
             <div class="left-panel">
                 <div class="profile-pic">
                     <img id="profile-image" src="" alt="프로필 사진">
@@ -511,11 +514,9 @@
                         <button class="submit-btn">일촌 신청하기</button>
                     </div>
                 </div>
-                
                 <div class="visitor-count">
                     <p id="visit-count">Today: 5 | Total: 12,345</p>
                 </div>
-                
                 <!-- 로그인/로그아웃 영역 (로그인 상태에 따라 다르게 표시) -->
                 <div id="auth-container">
                     <!-- 비로그인 상태: 로그인 폼 표시 -->
@@ -524,12 +525,10 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- 중앙 컨텐츠 영역 (페이지별로 변경) -->
+            <!-- 중앙 컨텐츠 영역 (iframe) -->
             <div class="main-content">
                 <iframe id="content-frame" width="100%" height="100%" frameborder="0"></iframe>
             </div>
-
             <!-- 오른쪽 네비게이션 바 -->
             <div class="right-panel">
                 <div class="nav-button" data-page="html/main_page/main_page.html">메인</div>
@@ -539,7 +538,6 @@
             </div>
         </div>
     </div>
-
     <script>
         // 사용자 정보 설정 - 'new' 폴더 사용
         const USER_FOLDER = 'new';

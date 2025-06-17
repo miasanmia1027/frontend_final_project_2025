@@ -1,5 +1,6 @@
 // 전공 데이터
 const subjects = [
+    // 각 전공별로 id, 이름, 색상, 파일 목록을 가진 객체 배열
     { id: 'computer', name: '컴퓨터공학', color: '#e74c3c', 
       files: ['알고리즘 기초.txt', '자료구조 요약.pdf', '프로그래밍 언어론.ppt'] },
     { id: 'math', name: '수학', color: '#2ecc71',
@@ -14,7 +15,7 @@ const subjects = [
       files: ['현대시 분석.pdf', '소설의 이해.txt', '문학 비평.docx'] }
 ];
 
-// DOM 요소
+// DOM 요소 변수 선언
 const subjectsTree = document.getElementById('subjects-tree');
 const filesGrid = document.getElementById('files-grid');
 const currentTitle = document.getElementById('current-title');
@@ -22,7 +23,7 @@ const currentColor = document.getElementById('current-color');
 const searchInput = document.getElementById('search-input');
 const searchBtn = document.getElementById('search-btn');
 
-// 모달 요소
+// 모달 관련 요소
 const addSubjectModal = document.getElementById('add-subject-modal');
 const addFileModal = document.getElementById('add-file-modal');
 const addSubjectBtn = document.getElementById('add-subject-btn');
@@ -31,26 +32,24 @@ const saveSubjectBtn = document.getElementById('save-subject-btn');
 const saveFileBtn = document.getElementById('save-file-btn');
 const modalCloseButtons = document.querySelectorAll('.modal-close, .modal-close-btn');
 
-// 파일 내용 저장 데이터
+// 파일 내용 저장용 객체
 const fileContents = {};
 
-// 파일 편집 모달 요소
+// 파일 편집 모달 관련 요소
 const editContentModal = document.getElementById('edit-content-modal');
 const fileContentTextarea = document.getElementById('file-content');
 const editFileTitle = document.getElementById('edit-file-title');
 const saveContentBtn = document.getElementById('save-content-btn');
 const downloadFileBtn = document.getElementById('download-file-btn');
 
-// 현재 선택된 전공
+// 현재 선택된 전공 및 파일 정보
 let currentSubject = null;
-
-// 현재 편집 중인 파일 정보
 let currentEditFile = null;
 let currentEditSubject = null;
 
-// 트리 메뉴 초기화
+// 트리 메뉴 초기화 함수
 function initTreeMenu() {
-    // 모든 파일 항목
+    // '모든 파일' 트리 항목 생성
     const allFilesItem = document.createElement('li');
     allFilesItem.className = 'tree-item';
     allFilesItem.innerHTML = `
@@ -61,17 +60,17 @@ function initTreeMenu() {
     `;
     subjectsTree.appendChild(allFilesItem);
     
-    // 전공별 트리 아이템
+    // 각 전공별 트리 항목 생성
     subjects.forEach(subject => {
         const treeItem = createSubjectTreeItem(subject);
         subjectsTree.appendChild(treeItem);
     });
     
-    // 트리 아이템 클릭 이벤트
+    // 트리 클릭 이벤트 등록
     subjectsTree.addEventListener('click', handleTreeClick);
 }
 
-// 전공 트리 아이템 생성
+// 전공 트리 항목 생성 함수
 function createSubjectTreeItem(subject) {
     const li = document.createElement('li');
     li.className = 'tree-item';
@@ -97,7 +96,7 @@ function createSubjectTreeItem(subject) {
     return li;
 }
 
-// 트리 클릭 이벤트 처리
+// 트리 클릭 이벤트 처리 함수
 function handleTreeClick(e) {
     const header = e.target.closest('.tree-item-header');
     if (!header) return;
@@ -120,7 +119,7 @@ function handleTreeClick(e) {
         }
     }
     
-    // 파일 표시
+    // 파일 또는 전공 클릭 시 처리
     const subjectId = header.dataset.id;
     const fileName = header.dataset.file;
     
@@ -148,7 +147,7 @@ function handleTreeClick(e) {
     }
 }
 
-// 모든 파일 표시
+// 모든 파일 표시 함수
 function showAllFiles() {
     filesGrid.innerHTML = '';
     subjects.forEach(subject => {
@@ -159,7 +158,7 @@ function showAllFiles() {
     });
 }
 
-// 전공별 파일 표시
+// 전공별 파일 표시 함수
 function showSubjectFiles(subject) {
     filesGrid.innerHTML = '';
     subject.files.forEach(fileName => {
@@ -168,7 +167,7 @@ function showSubjectFiles(subject) {
     });
 }
 
-// 파일 카드 생성
+// 파일 카드 생성 함수
 function createFileCard(fileName, subject) {
     const fileType = fileName.split('.').pop().toLowerCase();
     
@@ -193,11 +192,12 @@ function createFileCard(fileName, subject) {
         </div>
     `;
     
-    // 파일 카드 이벤트 수정
+    // 파일 열기 버튼 이벤트
     card.querySelector('.file-open-btn').addEventListener('click', () => {
         openFile(fileName, subject);
     });
     
+    // 파일 이름 수정 버튼 이벤트
     card.querySelector('.file-edit-btn').addEventListener('click', () => {
         const newName = prompt('파일 이름 수정:', fileName);
         if (newName && newName !== fileName) {
@@ -212,6 +212,7 @@ function createFileCard(fileName, subject) {
         }
     });
     
+    // 파일 삭제 버튼 이벤트
     card.querySelector('.file-delete-btn').addEventListener('click', () => {
         if (confirm(`${fileName} 파일을 삭제하시겠습니까?`)) {
             const index = subject.files.indexOf(fileName);
@@ -241,7 +242,7 @@ function createFileCard(fileName, subject) {
     return card;
 }
 
-// 파일 열기 함수
+// 파일 열기 함수 (모달 표시)
 function openFile(fileName, subject) {
     currentEditFile = fileName;
     currentEditSubject = subject;
@@ -278,7 +279,7 @@ function openFile(fileName, subject) {
     editContentModal.classList.add('active');
 }
 
-// 파일 내용 저장
+// 파일 내용 저장 버튼 이벤트
 saveContentBtn.addEventListener('click', () => {
     const content = fileContentTextarea.value;
     const fileKey = `${currentEditSubject.id}_${currentEditFile}`;
@@ -293,7 +294,7 @@ saveContentBtn.addEventListener('click', () => {
     editContentModal.classList.remove('active');
 });
 
-// 파일 다운로드
+// 파일 다운로드 버튼 이벤트
 downloadFileBtn.addEventListener('click', () => {
     const content = fileContentTextarea.value;
     const fileName = currentEditFile;
@@ -365,7 +366,7 @@ filesGrid.addEventListener('drop', (e) => {
     }
 });
 
-// 그래프 뷰 관련 변수
+// 그래프 뷰 관련 변수 선언
 const listViewBtn = document.getElementById('list-view-btn');
 const graphViewBtn = document.getElementById('graph-view-btn');
 const listContainer = document.getElementById('list-container');
@@ -373,7 +374,7 @@ const graphContainer = document.getElementById('graph-container');
 let graphInitialized = false;
 let graphSvg, graphSimulation, graphNodes, graphLinks;
 
-// 그래프 뷰 초기화
+// 그래프 뷰 초기화 함수
 function initGraphView() {
     const width = graphContainer.clientWidth;
     const height = graphContainer.clientHeight;
@@ -393,7 +394,7 @@ function initGraphView() {
         size: 20
     });
     
-    // 전공 노드 추가
+    // 전공 노드 및 파일 노드 추가
     subjects.forEach(subject => {
         nodes.push({
             id: subject.id,
@@ -410,7 +411,7 @@ function initGraphView() {
             value: 2
         });
         
-        // 파일 노드 추가
+        // 파일 노드 추가 및 전공과 연결
         subject.files.forEach(file => {
             const fileId = `${subject.id}-${file}`;
             nodes.push({
@@ -421,7 +422,6 @@ function initGraphView() {
                 parentId: subject.id
             });
             
-            // 전공과 파일 연결
             links.push({
                 source: subject.id,
                 target: fileId,
@@ -551,13 +551,13 @@ function initGraphView() {
             .attr("transform", d => `translate(${d.x}, ${d.y})`);
     });
 
-    // 그룹별 색상 설정
+    // 그룹별 색상 설정 함수
     function colorByGroup(group) {
         const colors = ["#3498db", "#e74c3c", "#2ecc71", "#f39c12"];
         return colors[group % colors.length];
     }
 
-    // 드래그 기능 설정
+    // 드래그 기능 설정 함수
     function drag(simulation) {
         function dragstarted(event) {
             if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -582,7 +582,7 @@ function initGraphView() {
             .on("end", dragended);
     }
     
-    // 확대/축소 버튼 이벤트
+    // 확대/축소/리셋 버튼 이벤트
     document.getElementById('zoom-in').addEventListener('click', () => {
         const currentTransform = d3.zoomTransform(graphSvg.node());
         graphSvg.transition().duration(300).call(
@@ -624,14 +624,14 @@ function updateGraphView() {
     }
 }
 
-// 트리 메뉴 업데이트 함수 수정
+// 트리 메뉴 업데이트 함수
 function updateTreeMenu() {
     subjectsTree.innerHTML = '';
     initTreeMenu();
     updateGraphView(); // 그래프 뷰도 함께 업데이트
 }
 
-// 모달 열기 관련 함수 개선
+// 모달 열기 관련 함수
 addSubjectBtn.addEventListener('click', () => {
     // 다른 모달이 열려있을 경우 닫기
     document.querySelectorAll('.modal.active').forEach(modal => {
@@ -668,7 +668,7 @@ addFileBtn.addEventListener('click', () => {
     addFileModal.classList.add('active');
 });
 
-// 파일 추가 이벤트 핸들러 수정
+// 파일 추가 이벤트 핸들러
 saveFileBtn.addEventListener('click', () => {
     const nameInput = document.getElementById('file-name');
     const typeSelect = document.getElementById('file-type');
@@ -715,7 +715,7 @@ saveFileBtn.addEventListener('click', () => {
     }
 });
 
-// 전공 추가 이벤트 핸들러 수정
+// 전공 추가 이벤트 핸들러
 saveSubjectBtn.addEventListener('click', () => {
     const nameInput = document.getElementById('subject-name');
     const subjectName = nameInput.value.trim();
@@ -758,7 +758,7 @@ saveSubjectBtn.addEventListener('click', () => {
     }
 });
 
-// 뷰 전환 이벤트
+// 뷰 전환 버튼 이벤트
 listViewBtn.addEventListener('click', () => {
     listViewBtn.classList.add('active');
     graphViewBtn.classList.remove('active');
@@ -785,7 +785,7 @@ graphViewBtn.classList.remove('active');
 listContainer.style.display = 'flex';
 graphContainer.style.display = 'none';
 
-// 모달 닫기 버튼에 이벤트 추가 - 코드 하단으로 이동
+// 모달 닫기 버튼에 이벤트 추가
 document.querySelectorAll('.modal-close, .modal-close-btn').forEach(button => {
     button.addEventListener('click', (e) => {
         e.preventDefault();
