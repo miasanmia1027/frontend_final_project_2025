@@ -16,7 +16,7 @@ body {
     font-family: 'YUniverse-B';
     font-weight: 300;
     font-size: large;
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -168,37 +168,41 @@ main {
 }
 
 .fortune-section {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
+    max-width: 100%;
+    margin: 20px 0;
+    padding: 15px;
     color: #2c3e50;
-    margin-bottom: 20px;
     font-size: 1.2em;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     border-bottom: 2px solid #eee;
     padding-bottom: 10px;
+    background-color: #fff;
 }
 
 .fortune-section h2 {
     font-family: 'YUniverse-B';
+    color: #bbe309;
+    font-size: 1.2em;
 }
 
 .quote-section {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
+    max-width: 100%;
+    margin: 20px 0;
+    padding: 15px;
     color: #2c3e50;
-    margin-bottom: 20px;
     font-size: 1.2em;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     border-bottom: 2px solid #eee;
     padding-bottom: 10px;
+    background-color: #fff;
 }
 
 .quote-section h2 {
     font-family: 'YUniverse-B';
+    color: #bbe309;
+    font-size: 1.2em;
 }
 
 .zodiac-sign .quote-content {
@@ -223,7 +227,6 @@ h2 {
 
 
 .side-panels h3 {
-    color: #2c3e50;
     margin-bottom: 10px;
     font-size: 1.5em;
 }
@@ -232,6 +235,12 @@ h2 {
     color:#bbe309;
 }
 
+.music-nct {
+    color: #bbe309;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    text-align: center;
+}
 
 @media (max-width: 768px) {
     main {

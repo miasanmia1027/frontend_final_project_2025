@@ -21,6 +21,13 @@
   width: 100%;
 }
 
+.side-panels .music-panel .music-nct {
+  color: #bbe309;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
 .album-cover {
   width: 180px;
   height: 180px;
