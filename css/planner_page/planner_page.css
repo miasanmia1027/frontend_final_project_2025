@@ -7,7 +7,7 @@
 
 /* 바디 배경 및 폰트 설정 */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'S-CoreDream-3Light';
     background: linear-gradient(135deg, #93DAFF, #93DAFF);
     min-height: 100vh;
     color: #333;
@@ -28,6 +28,7 @@ header {
 }
 
 header h1 {
+    font-family: 'YUniverse-B' !important;
     font-size: 2.5em;
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
@@ -35,16 +36,15 @@ header h1 {
 
 /* 나무 성장 섹션 */
 .tree-section {
-    background: rgba(248, 249, 250, 0.9);
-    border-radius: 15px;
-    padding: 20px;
-    grid-column: 2;
-    grid-row: 1;
+    background: linear-gradient(135deg, #f8fbff 80%, #e3f6ff 100%);
+    border-radius: 25px;
+    padding: 32px 24px 24px 24px;
+    margin: 16px 0;
+    box-shadow: 0 8px 32px rgba(147,218,255,0.18), 0 1.5px 8px rgba(147,218,255,0.10);
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    height: fit-content;
+    border: 1.5px solid #e0f2ff;
 }
 
 /* 나무 컨테이너 */
@@ -59,6 +59,10 @@ header h1 {
     position: relative;
     width: 80px;
     height: 120px;
+    background: #e6f7ff;
+    border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+    box-shadow: 0 4px 16px rgba(147,218,255,0.15);
+    margin-bottom: 10px;
 }
 
 /* 나무 몸통 */
@@ -224,7 +228,7 @@ main {
 
 /* 할 일 있는 날짜 표시 */
 .calendar-day.has-todos {
-    border-left: 4px solid #27ae60;
+    border-left: 4px solid	#FF6A89;
 }
 
 /* 할 일 개수 뱃지 */
@@ -240,17 +244,14 @@ main {
 
 /* 할 일 섹션(숨김 기본) */
 .todo-section {
-    background: #f8f9fa;
-    border-radius: 10px;
-    padding: 20px;
-    display: none;
-    grid-column: 2;
-    grid-row: 2;
-    height: 300px;
-    max-height: 300px;
-    overflow: hidden;
+    background: linear-gradient(135deg, #f8fbff 80%, #e3f6ff 100%);
+    border-radius: 25px;
+    box-shadow: 0 8px 32px rgba(147,218,255,0.10), 0 1.5px 8px rgba(147,218,255,0.08);
+    border: 1.5px solid #e0f2ff;
+    padding: 32px 24px 24px 24px;
     display: flex;
     flex-direction: column;
+    min-width: 320px;
 }
 
 /* 할 일 섹션 활성화 */
@@ -472,4 +473,28 @@ main {
     .pending-task-date {
         margin-bottom: 5px;
     }
+}
+
+main, .calendar-section, .tree-section, .todo-section, .pending-tasks-section, .calendar-header, .day-header, .calendar-day, .progress-info, .todo-header, .todo-input, .todo-list, .pending-tasks-list {
+    font-family: 'S-CoreDream-3Light', Arial, sans-serif;
+}
+
+@font-face {
+    font-family: 'IAMAPLAYER';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/IAMAPLAYER.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'YUniverse-B';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_yuniverse@1.0/YUniverse-B.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
