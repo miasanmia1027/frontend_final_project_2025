@@ -35,10 +35,9 @@
               />
             </div>
             <div class="weather-back">
-              <div class="weather">
-                22*C
-              </div>
+              <div class="weather">22*C</div>
             </div>
+          </div>
         </section>
 
         <section class="calendar-grid-section">
@@ -58,33 +57,31 @@
           </div>
         </section>
 
-        <section class="side-panels">
-          <div class="music-panel">
-            <h3 class="music-nct">Music Player</h3>
-            <div class="music-content">
-              <!-- 음악 플레이어 영역 추가 -->
-              <section class="music-player">
-                <div class="player">
-                  <img
-                    src="../../assets/Wish_album.jpg"
-                    alt="앨범 커버"
-                    class="album-cover"
-                  />
-                  <div class="track-info">
-                    <h3 class="song-title">Wish</h3>
-                    <p class="artist">NCT WISH</p>
-                    <div class="progress-bar">
-                      <div class="progress"></div>
-                    </div>
-                    <div class="controls">
-                      <button id="prev">⏮</button>
-                      <button id="play">⏯</button>
-                      <button id="next">⏭</button>
-                    </div>
+        <section class="music-panel">
+          <h3 class="music-nct">Music Player</h3>
+          <div class="music-content">
+            <!-- 음악 플레이어 영역 추가 -->
+            <section class="music-player">
+              <div class="player">
+                <img
+                  src="../../assets/Wish_album.jpg"
+                  alt="앨범 커버"
+                  class="album-cover"
+                />
+                <div class="track-info">
+                  <h3 class="song-title">Wish</h3>
+                  <p class="artist">NCT WISH</p>
+                  <div class="progress-bar">
+                    <div class="progress"></div>
+                  </div>
+                  <div class="controls">
+                    <button id="prev">⏮</button>
+                    <button id="play">⏯</button>
+                    <button id="next">⏭</button>
                   </div>
                 </div>
-              </section>
-            </div>
+              </div>
+            </section>
           </div>
         </section>
       </main>
@@ -183,6 +180,5 @@
       // Initial song load
       loadSong(recommendedSongs[currentSongIndex]);
     </script>
-    
   </body>
 </html>

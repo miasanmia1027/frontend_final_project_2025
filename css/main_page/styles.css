@@ -81,18 +81,26 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 20px;
     margin-bottom: 20px;
     padding-top: 20px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    height: 100%;
 }
 
-
-.weather-section .side-panels {
-    flex: 1;
-    min-width: 250px;
-    max-width: 300px;
+.weather-section,
+.calendar-grid-section,
+.music-panel {
+    flex: 1 1 0;
+    min-width: 0 !important;
+    max-width: none !important;
+    width: auto !important;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    height: 100%;
 }
 
 .weather-content {
@@ -167,6 +175,17 @@ main {
     max-width: 700px;
 }
 
+.music-panel {
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+}
+
+.music-panel h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
 .fortune-section {
     max-width: 100%;
     margin: 20px 0;
@@ -223,12 +242,6 @@ h2 {
     font-size: 1.5em;
     border-bottom: 2px solid #eee;
     padding-bottom: 10px;
-}
-
-
-.side-panels h3 {
-    margin-bottom: 10px;
-    font-size: 1.5em;
 }
 
 .weather-section h2 {
