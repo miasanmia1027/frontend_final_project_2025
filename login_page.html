@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">게스트님의 미니홈피</title>
+    <style>
+        /* 전체 페이지 배경 및 폰트 설정 */
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            background-color: #d9d9d9;
+            background-size: cover;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: auto;
+        }
+        
+        /* 전체 화면을 감싸는 컨테이너 */
+        .page-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 100vh;
+            max-height: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+        
+        /* 미니홈피 메인 컨테이너 */
+        .cyworld-container {
+            width: 1000px;
+            height: 700px;
+            background-color: #ffffff;
+            border: 2px solid #cccccc;
+            display: grid;
+            grid-template-rows: 30px 1fr;
+            grid-template-columns: 220px 1fr 100px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            box-sizing: border-box;
+            border-radius: 6px;
+        }
+        
+        /* 상단 헤더 영역 */
+        .header {
+            grid-column: 1 / 4;
+            height: 30px;
+            background-color: #f0f0f0;
+            border-bottom: 1px solid #dddddd;
+            color: #333333;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 12px;
+        }
+        
+        /* 왼쪽 패널(프로필, 로그인 등) */
+        .left-panel {
+            background-color: #f3f3f3;
+            border-right: 1px solid #ddd;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+        }
+        
+        /* 프로필 사진 영역 */
+        .profile-pic {
+            width: 80%;
+            max-width: 150px;
+            height: auto;
+            aspect-ratio: 1/1;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* 로그인 관련 컨테이너 */
+        .login-container {
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .login-info {
+            font-size: 12px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        /* 중앙 메인 컨텐츠(iframe) */
+        .main-content {
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #fff;
+            position: relative;
+            border-left: 1px solid #eee;
+        }
+        
+        /* 오른쪽 네비게이션 바 */
+        .right-panel {
+            background-color: #f8f8f8;
+            border-left: 1px solid #ddd;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 네비게이션 버튼 스타일 */
+        .nav-button {
+            padding: 10px 0;
+            text-align: center;
+            font-size: 11px;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button:hover {
+            background-color: #e0e0e0;
+            color: #6699cc;
+        }
+        
+        /* 방명록, 댓글 등 입력 영역 */
+        .comment-box {
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .comment-input {
+            width: 90%;
+            padding: 5px;
+            font-size: 12px;
+        }
+        
+        .submit-btn {
+            padding: 5px 10px;
+            margin-top: 5px;
+            font-size: 12px;
+            background-color: #6699cc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        /* 입력 폼 스타일 */
+        input, button {
+            margin: 3px 0;
+            padding: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        /* 방문자 수 표시 */
+        .visitor-count {
+            margin-top: 10px;
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+        }
+        
+        /* URL 표시 영역 */
+        .url-display {
+            color: #6699cc;
+            font-size: 11px;
+            margin-right: auto;
+        }
+        
+        /* 창 상단 버튼 스타일 */
+        .window-controls {
+            display: flex;
+            margin-left: auto;
+        }
+        
+        /* 창 컬러 버튼들 */
+        .window-button {
+            width: 16px;
+            height: 16px;
+            margin-left: 5px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+        }
+        
+        /* 페이지 전환 애니메이션 */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* 로딩 인디케이터 */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .loading::after {
+            content: "로딩중...";
+            display: inline-block;
+            animation: dots 1.5s infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: "로딩중."; }
+            40% { content: "로딩중.."; }
+            60%, 100% { content: "로딩중..."; }
+        }
+        
+        /* 반응형 디자인 */
+        @media (min-width: 1200px) {
+            .cyworld-container {
+                width: 95vw;
+                height: 90vh;
+                max-width: 1800px;
+                max-height: 1200px;
+            }
+        }
+        
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .cyworld-container {
+                width: 95vw;
+                height: 90vh;
+                min-width: 950px;
+            }
+            
+            .profile-pic {
+                max-width: 120px;
+            }
+        }
+        
+        @media (min-width: 768px) and (max-width: 991px) {
+            .cyworld-container {
+                width: 95vw;
+                height: 85vh;
+                min-width: auto;
+                grid-template-columns: 25% 1fr 10%;
+            }
+            
+            .profile-pic {
+                max-width: 100px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+            }
+            
+            .cyworld-container {
+                width: 100%;
+                height: auto;
+                min-width: auto;
+                min-height: 100vh;
+                grid-template-rows: auto 1fr auto auto;
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                grid-column: 1 / 2;
+            }
+            
+            .left-panel {
+                grid-row: 3;
+                grid-column: 1;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                padding: 10px;
+                border-right: none;
+                border-top: 1px solid #ddd;
+            }
+            
+            .profile-pic {
+                width: 60px;
+                height: 60px;
+                min-width: 60px;
+                min-height: 60px;
+                aspect-ratio: 1/1;
+            }
+            
+            .login-container {
+                width: calc(100% - 70px);
+            }
+            
+            .miniroom {
+                width: 100%;
+                height: 120px;
+                margin-top: 10px;
+            }
+            
+            .main-content {
+                grid-row: 2;
+                grid-column: 1;
+                border-left: none;
+            }
+            
+            .right-panel {
+                grid-row: 4;
+                grid-column: 1;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                border-left: none;
+                border-top: 1px solid #ddd;
+            }
+            
+            .nav-button {
+                padding: 8px 15px;
+                border-right: 1px solid #ddd;
+                border-bottom: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .cyworld-container {
+                border-radius: 0;
+                max-width: 100%;
+                max-height: 100%;
+                width: 100vw;
+                min-height: 100vh;
+                margin: 0;
+            }
+            
+            body {
+                padding: 0;
+            }
+            
+            .profile-pic {
+                width: 60px;
+                height: 60px;
+                min-width: 60px;
+                min-height: 60px;
+                aspect-ratio: 1/1;
+            }
+            
+            .login-container {
+                width: calc(100% - 70px);
+            }
+            
+            .nav-button {
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+            
+            .header {
+                font-size: 10px;
+            }
+            
+            .url-display {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 70%;
+            }
+        }
+        
+        /* 로그인 폼 스타일 */
+        .login-form-container {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            width: 90%;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .login-form-container h4 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #555;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .login-btn {
+            background-color: #6699cc;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin-top: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-weight: bold;
+            width: auto;
+        }
+        
+        /* 프로필 및 배경 이미지 변경 버튼 */
+        .image-change-buttons {
+            margin-top: 10px;
+            text-align: center;
+            width: 90%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        .image-change-buttons button {
+            background-color: #6699cc;
+            color: white;
+            border: none;
+            padding: 8px 5px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 3px;
+            width: 100%;
+            display: inline-block;
+        }
+        
+        /* 초기화 버튼 스타일 */
+        .reset-btn {
+            background-color: #ff6666 !important;
+        }
+        
+        /* 버튼 그룹 스타일 */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+        
+        /* 파일 입력 숨기기 */
+        .hidden-file-input {
+            display: none;
+        }
+        
+        /* 이름 변경 스타일 */
+        .name-change {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            width: 90%;
+        }
+        
+        .name-change input {
+            flex: 1;
+            margin-right: 5px;
+            padding: 3px 5px;
+            font-size: 12px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        
+        .name-change button {
+            background-color: #6699cc;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            margin: 0;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 3px;
+            width: auto;
+        }
+        
+        .login-notice {
+            color: #ff6666;
+            font-size: 11px;
+            text-align: center;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        
+        /* 로그아웃 버튼 스타일 */
+        .logout-btn {
+            background-color: #ff6666;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- 전체 페이지 컨테이너 -->
+    <div class="page-container">
+        <!-- 미니홈피 메인 컨테이너 -->
+        <div class="cyworld-container">
+            <!-- 상단 헤더 (창 컨트롤 버튼) -->
+            <div class="header">
+                <div class="window-controls">
+                    <div class="window-button" style="background-color: #ffcc00;"></div>
+                    <div class="window-button" style="background-color: #00cc00;"></div>
+                    <div class="window-button" style="background-color: #ff6666;"></div>
+                </div>
+            </div>
+            <!-- 왼쪽 로그인/프로필 패널 -->
+            <div class="left-panel">
+                <div class="profile-pic">
+                    <img id="profile-image" src="" alt="프로필 사진">
+                </div>
+                <div class="login-container">
+                    <div class="login-info" id="login-info">
+                        게스트님 미니홈피에<br>
+                        오신 것을<br>
+                        환영합니다!
+                    </div>
+                    <div>
+                        <p id="user-name">게스트</p>
+                        <div>
+                            <span>일촌: </span>
+                            <span id="friend-count">0</span>
+                        </div>
+                        <button class="submit-btn">일촌 신청하기</button>
+                    </div>
+                </div>
+                <div class="visitor-count">
+                    <p id="visit-count">Today: 5 | Total: 12,345</p>
+                </div>
+                <!-- 이름 변경 폼 -->
+                <div class="name-change" id="name-change">
+                    <input type="text" id="name-input" placeholder="새 이름 입력">
+                    <button id="name-change-btn">변경</button>
+                </div>
+                <!-- 이미지 변경 버튼 -->
+                <div class="image-change-buttons" id="image-change-buttons">
+                    <button id="change-profile">프로필 사진 변경</button>
+                    <button id="reset-profile" class="reset-btn">초기화</button>
+                    <button id="change-background">배경 변경</button>
+                    <button id="reset-background" class="reset-btn">초기화</button>
+                    <input type="file" id="profile-upload" class="hidden-file-input" accept="image/*">
+                    <input type="file" id="background-upload" class="hidden-file-input" accept="image/*">
+                </div>
+                <!-- 로그아웃 버튼 -->
+                <div class="logout-container" id="logout-form">
+                    <div class="user-info-box">
+                        <p><strong id="logged-user-name">게스트</strong>님 로그인 중</p>
+                    </div>
+                    <button class="logout-btn" id="logout-btn">로그아웃</button>
+                </div>
+            </div>
+            <!-- 중앙 컨텐츠 영역 (iframe) -->
+            <div class="main-content">
+                <iframe id="content-frame" width="100%" height="100%" frameborder="0"></iframe>
+            </div>
+            <!-- 오른쪽 네비게이션 바 -->
+            <div class="right-panel">
+                <div class="nav-button" data-page="html/main_page/main_page.html">메인</div>
+                <div class="nav-button" data-page="html/planner_page/planner_page.html">캘린더</div>
+                <div class="nav-button" data-page="html/diary_page/diary_page.html">일기</div>
+                <div class="nav-button" data-page="html/note_page/note_page.html">노트</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 사용자 정보 설정 - 'new' 폴더 사용
+        const USER_FOLDER = 'new';
+        // 이미지 경로 설정 - new 폴더 기준
+        const PROFILE_PATH = `img/${USER_FOLDER}/profile_img.jpg`;
+        const BACKGROUND_PATH = `img/${USER_FOLDER}/background.jpg`;
+        // 사용자 정보 객체
+        const userInfo = {
+            name: "게스트",
+            today: 5,
+            total: 12345,
+            friends: 1
+        };
+        // 페이지 로드 시 실행
+        window.addEventListener('load', function() {
+            // 로그인 상태가 아니면 로그아웃 페이지로 리다이렉트
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn !== 'true') {
+                window.location.href = "logout_page.html";
+                return;
+            }
+            // 이미지 설정
+            setDefaultImages();
+            // 초기 페이지 로드 (첫 번째 메뉴로)
+            const firstPage = document.querySelector('.nav-button').getAttribute('data-page');
+            document.getElementById('content-frame').src = firstPage;
+            document.querySelector('.nav-button').style.backgroundColor = '#5588bb';
+            // 로그아웃 버튼 이벤트 리스너
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                window.location.href = "logout_page.html";
+            });
+            // 이름 변경 버튼 이벤트 리스너
+            document.getElementById('name-change-btn').addEventListener('click', changeName);
+            // 저장된 설정 불러오기
+            loadSavedSettings();
+        });
+        // 저장된 설정 불러오기
+        function loadSavedSettings() {
+            // 저장된 이름 로드
+            const savedDisplayName = localStorage.getItem('display-name');
+            if (savedDisplayName) {
+                userInfo.name = savedDisplayName;
+                updateUserInfo();
+            }
+        }
+        // 기본 이미지 설정 함수
+        function setDefaultImages() {
+            // 저장된 커스텀 이미지 로드
+            const customProfile = localStorage.getItem('custom-profile');
+            const customBackground = localStorage.getItem('custom-background');
+            if (customProfile) {
+                document.getElementById('profile-image').src = customProfile;
+            } else {
+                document.getElementById('profile-image').src = PROFILE_PATH;
+            }
+            if (customBackground) {
+                document.body.style.backgroundImage = `url('${customBackground}')`;
+            } else {
+                document.body.style.backgroundImage = `url('${BACKGROUND_PATH}')`;
+            }
+            // 이미지 로드 에러 처리
+            document.getElementById('profile-image').onerror = function() {
+                this.src = 'img/default_profile.jpg';
+                console.error('프로필 이미지를 찾을 수 없습니다:', PROFILE_PATH);
+            };
+        }
+        // 이름 변경 함수
+        function changeName() {
+            const newName = document.getElementById('name-input').value.trim();
+            if (!newName) {
+                alert('이름을 입력해주세요');
+                return;
+            }
+            userInfo.name = newName;
+            localStorage.setItem('display-name', newName);
+            updateUserInfo();
+            document.getElementById('name-input').value = '';
+            alert(`이름이 '${newName}'(으)로 변경되었습니다`);
+        }
+        // 사용자 정보 업데이트 함수
+        function updateUserInfo() {
+            // 타이틀 업데이트
+            document.getElementById('page-title').textContent = `${userInfo.name}님의 미니홈피`;
+            // 환영 메시지 업데이트
+            document.getElementById('login-info').innerHTML = 
+                `${userInfo.name}님 미니홈피에<br>
+                 오신 것을<br>
+                 환영합니다!`;
+            // 사용자 이름 업데이트
+            document.getElementById('user-name').textContent = userInfo.name;
+            document.getElementById('logged-user-name').textContent = userInfo.name;
+        }
+        // 네비게이션 버튼 클릭 시 iframe 소스 변경
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const page = this.getAttribute('data-page');
+                document.getElementById('content-frame').src = page;
+                // 활성화된 버튼 스타일 변경
+                document.querySelectorAll('.nav-button').forEach(btn => {
+                    btn.style.backgroundColor = '';
+                });
+                this.style.backgroundColor = '#5588bb';
+            });
+        });
+        // 이미지 변경 기능 설정
+        window.addEventListener('load', function() {
+            // 프로필 이미지 변경 버튼 이벤트
+            document.getElementById('change-profile').addEventListener('click', function() {
+                document.getElementById('profile-upload').click();
+            });
+            // 배경 이미지 변경 버튼 이벤트
+            document.getElementById('change-background').addEventListener('click', function() {
+                document.getElementById('background-upload').click();
+            });
+            // 프로필 초기화 버튼 이벤트
+            document.getElementById('reset-profile').addEventListener('click', function() {
+                // 로컬 스토리지에서 커스텀 프로필 제거
+                localStorage.removeItem('custom-profile');
+                // 기본 프로필 이미지로 복원
+                document.getElementById('profile-image').src = PROFILE_PATH;
+                alert('프로필 이미지가 초기화되었습니다.');
+            });
+            // 배경 초기화 버튼 이벤트
+            document.getElementById('reset-background').addEventListener('click', function() {
+                // 로컬 스토리지에서 커스텀 배경 제거
+                localStorage.removeItem('custom-background');
+                // 기본 배경 이미지로 복원
+                document.body.style.backgroundImage = `url('${BACKGROUND_PATH}')`;
+                alert('배경 이미지가 초기화되었습니다.');
+            });
+            // 프로필 이미지 업로드 처리
+            document.getElementById('profile-upload').addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        document.getElementById('profile-image').src = event.target.result;
+                        // 로컬 스토리지에 저장
+                        localStorage.setItem('custom-profile', event.target.result);
+                        alert('프로필 이미지가 변경되었습니다.');
+                    }
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
+            // 배경 이미지 업로드 처리
+            document.getElementById('background-upload').addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        document.body.style.backgroundImage = `url('${event.target.result}')`;
+                        // 로컬 스토리지에 저장
+                        localStorage.setItem('custom-background', event.target.result);
+                        alert('배경 이미지가 변경되었습니다.');
+                    }
+                    reader.readAsDataURL(e.target.files[0]);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
