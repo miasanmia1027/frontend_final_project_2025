@@ -48,5 +48,30 @@
     </div>
 
     <script src="../../js/login_page/auth.js"></script>
+    
+    <!-- 로그인 완료 후 미니홈피로 리다이렉트하는 스크립트 추가 -->
+    <script>
+      document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // 폼 기본 제출 방지
+        
+        // 입력 값 가져오기
+        const nickname = document.getElementById('nickname').value;
+        const password = document.getElementById('password').value;
+        
+        // 간단한 유효성 검사
+        if (!nickname || !password) {
+          alert('닉네임과 비밀번호를 입력해주세요.');
+          return;
+        }
+        
+        // 로그인 성공 처리
+        // 실제 환경에서는 서버에 인증 요청을 보내야 함
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('display-name', nickname);
+        
+        // login_page.html로 리다이렉트
+        window.location.href = "../../login_page.html";
+      });
+    </script>
   </body>
 </html>

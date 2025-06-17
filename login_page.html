@@ -568,10 +568,10 @@
             </div>
             <!-- 오른쪽 네비게이션 바 -->
             <div class="right-panel">
-                <div class="nav-button" data-page="html/main_page/main_page.html">메인</div>
-                <div class="nav-button" data-page="html/planner_page/planner_page.html">캘린더</div>
-                <div class="nav-button" data-page="html/diary_page/diary_page.html">일기</div>
-                <div class="nav-button" data-page="html/note_page/note_page.html">노트</div>
+                <div class="nav-button" data-page="pages/main_page/index.html">메인</div>
+                <div class="nav-button" data-page="pages/planner_page/planner_page.html">캘린더</div>
+                <div class="nav-button" data-page="pages/diary_page/diary.html">일기</div>
+                <div class="nav-button" data-page="pages/note_page/note_page.html">노트</div>
             </div>
         </div>
     </div>
@@ -604,6 +604,7 @@
             document.querySelector('.nav-button').style.backgroundColor = '#5588bb';
             // 로그아웃 버튼 이벤트 리스너
             document.getElementById('logout-btn').addEventListener('click', function() {
+                localStorage.setItem('isLoggedIn', 'false');
                 window.location.href = "logout_page.html";
             });
             // 이름 변경 버튼 이벤트 리스너

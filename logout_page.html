@@ -531,10 +531,10 @@
             </div>
             <!-- 오른쪽 네비게이션 바 -->
             <div class="right-panel">
-                <div class="nav-button" data-page="html/main_page/main_page.html">메인</div>
-                <div class="nav-button" data-page="html/planner_page/planner_page.html">캘린더</div>
-                <div class="nav-button" data-page="html/diary_page/diary_page.html">일기</div>
-                <div class="nav-button" data-page="html/note_page/note_page.html">노트</div>
+                <div class="nav-button" data-page="pages/main_page/index.html">메인</div>
+                <div class="nav-button" data-page="pages/planner_page/planner_page.html">캘린더</div>
+                <div class="nav-button" data-page="pages/diary_page/diary.html">일기</div>
+                <div class="nav-button" data-page="pages/note_page/note_page.html">노트</div>
             </div>
         </div>
     </div>
@@ -563,9 +563,9 @@
             document.getElementById('content-frame').src = firstPage;
             document.querySelector('.nav-button').style.backgroundColor = '#5588bb';
             
-            // 로그인 버튼 이벤트 리스너 - standup 경로로 수정
+            // 로그인 버튼 이벤트 리스너 - pages 폴더 경로로 수정
             document.getElementById('login-submit').addEventListener('click', function() {
-                window.location.href = "standup/pages/login_page/login.html";
+                window.location.href = "pages/login_page/login.html";
             });
         });
 
