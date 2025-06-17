@@ -21,61 +21,6 @@ body {
     padding: 20px;
 }
 
-/* Top Navigation Bar */
-.top-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    z-index: 1000;
-}
-
-.nav-left .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.top-nav a {
-    text-decoration: none;
-    color: #7f8c8d;
-    font-weight: 500;
-    padding: 8px 15px;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-}
-
-.top-nav a:hover {
-    background-color: #f0f0f0;
-    color: #333;
-}
-
-.top-nav a.home {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 40px;
-    padding: 0;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-}
-
-.top-nav a.home img {
-    width: 55px;
-    height: 40px;
-}
-
-.top-nav a.home:hover {
-    background-color: #f0f0f0;
-    transform: scale(1.1);
-}
 
 main {
     display: flex;
@@ -89,18 +34,37 @@ main {
     height: 100%;
 }
 
+main > .weather-section {
+    flex: 1 1 0;
+    height: 600px;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+main > .calendar-grid-section {
+    flex: 2 1 0;
+    height: 600px;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+main > .music-panel {
+    flex: 1 1 0;
+    height: 600px;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+}
 .weather-section,
 .calendar-grid-section,
 .music-panel {
-    flex: 1 1 0;
-    min-width: 0 !important;
-    max-width: none !important;
-    width: auto !important;
+    height: 100%;
+}
+.calendar-section {
+    height: 100%;
+    min-height: 450px;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    justify-content: stretch;
-    height: 100%;
 }
 
 .weather-content {
@@ -108,57 +72,57 @@ main {
     background: #fff;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 340px;
+    min-width: 200px;
     width: 100%;
-    max-width: 300px;
-    min-height: 430px;
+    height: 340px;
+    min-height: 480px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
+    justify-content: stretch;
+    align-items: stretch;
     overflow: hidden;
-    margin: 2px auto;
+    margin: 0 auto;
     padding: 0;
 }
 
 .weather-image {
-    position: absolute;
-    border-radius: 15px;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-}
-
-/* .weather-back {
-    width: 100%;
-    position: absolute;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-
-.weather {
-    font-family: 'S-CoreDream-3Light';
     position: relative;
-    z-index: 1;
-    font-size: 1.2em;
-    font-weight: bold;
-    backdrop-filter: blur(8px);
-    color: white;
-    padding: 1px 0;
-    background-color: rgba(0,0,0,0.2);
-    border-radius: 8px;
-    padding: 6px 12px;
-    margin-bottom: 20px;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    min-height: 450px;
+    z-index: 0;
+    display: flex;
+    flex: 1 1 0;
+    align-self: stretch;
 }
 
 .weather-image img {
     width: 100%;
     height: 100%;
+    min-height: 450px;
     object-fit: cover;
     opacity: 0.9;
+    z-index: 1;
+    align-self: stretch;
+}
+
+.weather {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-family: 'S-CoreDream-3Light';
+    font-size: 1.2em;
+    font-weight: bold;
+    backdrop-filter: blur(8px);
+    color: white;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    padding: 6px 18px;
+    margin-bottom: 0;
 }
 
 #weather-info {
@@ -171,14 +135,10 @@ main {
 
 .calendar-grid-section {
     flex: 2;
-    min-width: 500px;
-    max-width: 700px;
 }
 
 .music-panel {
     flex: 1;
-    min-width: 250px;
-    max-width: 300px;
 }
 
 .music-panel h3 {
@@ -245,7 +205,8 @@ h2 {
 }
 
 .weather-section h2 {
-    color:#bbe309;
+    color: #bbe309;
+    font-size: 1.3em;
 }
 
 .music-nct {
@@ -280,4 +241,83 @@ h2 {
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_yuniverse@1.0/YUniverse-B.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
+}
+
+/* --- 달력(캘린더) 스타일 planner_page에서 복사 --- */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.calendar-header button {
+    background: #74b9ff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+.calendar-header button:hover {
+    background: #0984e3;
+}
+#calendar-title {
+    font-size: 1.5em;
+    color: #333;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+.day-header {
+    background: #74b9ff;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+}
+.calendar-day {
+    background: white;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.calendar-day:hover {
+    background: #e3f2fd;
+    transform: scale(1.05);
+}
+.calendar-day.selected {
+    background: #74b9ff;
+    color: white;
+}
+.calendar-day.other-month {
+    color: #ccc;
+    background: #f5f5f5;
+}
+.calendar-day.has-todos {
+    border-left: 4px solid #27ae60;
+}
+.todo-count {
+    font-size: 0.8em;
+    background: #27ae60;
+    color: white;
+    border-radius: 10px;
+    padding: 2px 6px;
+    align-self: center;
+    margin-top: 5px;
 }

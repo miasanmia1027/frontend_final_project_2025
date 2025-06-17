@@ -27,19 +27,21 @@
         </section>
 
         <section class="calendar-grid-section">
-          <div class="calendar-header">
-            <div class="month-navigation">
-              <span class="prev-month">&lt;</span>
-              <span class="current-month" id="current-month-year"></span>
-              <span class="next-month">&gt;</span>
+          <div class="calendar-section">
+            <div class="calendar-header">
+              <button id="prev-month">&lt;</button>
+              <h2 id="calendar-title"></h2>
+              <button id="next-month">&gt;</button>
             </div>
-            <div class="today-button" id="today-button">오늘</div>
-          </div>
-          <div class="calendar-weekdays" id="calendar-weekdays">
-            <!-- 요일이 여기에 들어갑니다 -->
-          </div>
-          <div class="calendar-days" id="calendar-days">
-            <!-- 날짜 셀이 여기에 들어갑니다 -->
+            <div class="calendar-grid" id="calendar-grid">
+              <div class="day-header">일</div>
+              <div class="day-header">월</div>
+              <div class="day-header">화</div>
+              <div class="day-header">수</div>
+              <div class="day-header">목</div>
+              <div class="day-header">금</div>
+              <div class="day-header">토</div>
+            </div>
           </div>
         </section>
 
@@ -166,5 +168,6 @@
       // Initial song load
       loadSong(recommendedSongs[currentSongIndex]);
     </script>
+    <script src="../../js/planner_page/planner_page.js"></script>
   </body>
 </html>
