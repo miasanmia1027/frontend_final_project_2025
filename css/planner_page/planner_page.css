@@ -8,7 +8,7 @@
 /* 바디 배경 및 폰트 설정 */
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #74b9ff, #0984e3);
+    background: linear-gradient(135deg, #93DAFF, #93DAFF);
     min-height: 100vh;
     color: #333;
 }
@@ -69,7 +69,7 @@ header h1 {
     transform: translateX(-50%);
     width: 15px;
     height: 40px;
-    background: #8B4513;
+    background: #4b2e2e;
     border-radius: 0 0 5px 5px;
 }
 
@@ -77,7 +77,7 @@ header h1 {
 .leaves {
     position: absolute;
     border-radius: 50%;
-    background: #228B22;
+    background: #006400;
     opacity: 0;
     transition: all 0.5s ease;
 }
@@ -116,7 +116,7 @@ header h1 {
 .progress-info {
     text-align: center;
     font-weight: bold;
-    color: #27ae60;
+    color: #96C7ED;
 }
 
 /* 메인 레이아웃(달력+나무+할일) - 수정된 부분 */
@@ -149,7 +149,7 @@ main {
 }
 
 .calendar-header button {
-    background: #74b9ff;
+    background: #96C7ED;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -159,7 +159,7 @@ main {
 }
 
 .calendar-header button:hover {
-    background: #0984e3;
+    background: #96C7ED;
 }
 
 #calendar-title {
@@ -181,7 +181,7 @@ main {
 
 /* 요일 헤더 */
 .day-header {
-    background: #74b9ff;
+    background: #96C7ED;
     color: white;
     padding: 15px;
     text-align: center;
@@ -230,7 +230,7 @@ main {
 /* 할 일 개수 뱃지 */
 .todo-count {
     font-size: 0.8em;
-    background: #27ae60;
+    background:	#FF6A89;
     color: white;
     border-radius: 10px;
     padding: 2px 6px;
@@ -378,10 +378,10 @@ main {
 }
 
 .pending-tasks-section h3 {
-    color: #333;
+    color:#96C7ED;
     margin-bottom: 15px;
     font-size: 1.3em;
-    border-bottom: 2px solid #74b9ff;
+    border-bottom: 2px solid #96C7ED;
     padding-bottom: 10px;
 }
 
