@@ -20,26 +20,12 @@
 <body>
     <!-- 전체 컨테이너 -->
     <div class="container">
-        <!-- 헤더(타이틀, 나무 성장) -->
+        <!-- 헤더(타이틀) -->
         <header>
             <h1>나의 플래너</h1>
-            <div class="tree-section">
-                <h3>성장하는 나무 🌱</h3>
-                <div class="tree-container">
-                    <div class="tree" id="tree">
-                        <div class="trunk"></div>
-                        <div class="leaves level-1"></div>
-                        <div class="leaves level-2"></div>
-                        <div class="leaves level-3"></div>
-                    </div>
-                </div>
-                <div class="progress-info">
-                    <span id="progress-text">진행률: 0%</span>
-                </div>
-            </div>
         </header>
 
-        <!-- 메인(달력 + 할 일) -->
+        <!-- 메인(달력 + 나무 + 할 일) -->
         <main>
             <!-- 달력 섹션 -->
             <div class="calendar-section">
@@ -60,6 +46,22 @@
                 </div>
             </div>
 
+            <!-- 나무 성장 섹션 - 달력 옆으로 이동 -->
+            <div class="tree-section">
+                <h3>성장하는 나무 🌱</h3>
+                <div class="tree-container">
+                    <div class="tree" id="tree">
+                        <div class="trunk"></div>
+                        <div class="leaves level-1"></div>
+                        <div class="leaves level-2"></div>
+                        <div class="leaves level-3"></div>
+                    </div>
+                </div>
+                <div class="progress-info">
+                    <span id="progress-text">진행률: 0%</span>
+                </div>
+            </div>
+
             <!-- 할 일 섹션 -->
             <div class="todo-section" id="todo-section">
                 <div class="todo-header">
@@ -73,6 +75,14 @@
                 <div class="todo-list" id="todo-list"></div>
             </div>
         </main>
+
+        <!-- 미완료 할 일 섹션 -->
+        <section class="pending-tasks-section">
+            <h3>오늘의 미완료 할 일</h3>
+            <div class="pending-tasks-list" id="pending-tasks-list">
+                <!-- 미완료 할 일들이 여기에 표시됩니다 -->
+            </div>
+        </section>
     </div>
 
     <!-- 플래너 페이지 JS 연결 -->

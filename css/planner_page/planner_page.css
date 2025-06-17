@@ -35,12 +35,16 @@ header h1 {
 
 /* 나무 성장 섹션 */
 .tree-section {
-    background: rgba(255,255,255,0.9);
+    background: rgba(248, 249, 250, 0.9);
     border-radius: 15px;
     padding: 20px;
-    margin: 20px auto;
-    max-width: 300px;
-    color: #333;
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    height: fit-content;
 }
 
 /* 나무 컨테이너 */
@@ -115,20 +119,25 @@ header h1 {
     color: #27ae60;
 }
 
-/* 메인 레이아웃(달력+할일) */
+/* 메인 레이아웃(달력+나무+할일) - 수정된 부분 */
 main {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 30px;
+    grid-template-rows: auto auto;
+    gap: 20px;
     background: white;
     border-radius: 15px;
     padding: 30px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-/* 달력 섹션 */
+/* 달력 섹션 - 첫번째 셀에 배치 (높이 고정) */
 .calendar-section {
-    min-height: 500px;
+    height: 600px;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    display: flex;
+    flex-direction: column;
 }
 
 /* 달력 헤더(월 이동 버튼) */
@@ -158,7 +167,7 @@ main {
     color: #333;
 }
 
-/* 달력 그리드 */
+/* 달력 그리드 (스크롤 추가) */
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -166,6 +175,8 @@ main {
     background: #f8f9fa;
     border-radius: 10px;
     padding: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
 }
 
 /* 요일 헤더 */
@@ -233,11 +244,18 @@ main {
     border-radius: 10px;
     padding: 20px;
     display: none;
+    grid-column: 2;
+    grid-row: 2;
+    height: 300px;
+    max-height: 300px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 /* 할 일 섹션 활성화 */
 .todo-section.active {
-    display: block;
+    display: flex; /* block에서 flex로 변경하여 내부 레이아웃 유지 */
 }
 
 /* 할 일 헤더 */
@@ -292,8 +310,9 @@ main {
 
 /* 할 일 목록 */
 .todo-list {
-    max-height: 400px;
     overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 5px; /* 스크롤바 공간 확보 */
 }
 
 /* 할 일 아이템 */
@@ -346,10 +365,93 @@ main {
     background: #f0f0f0;
 }
 
-/* 반응형(모바일) */
+/* 미완료 할 일 섹션 */
+.pending-tasks-section {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    max-height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.pending-tasks-section h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    border-bottom: 2px solid #74b9ff;
+    padding-bottom: 10px;
+}
+
+.pending-tasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    max-height: 250px;
+}
+
+.pending-task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    border-left: 4px solid #ff9f43;
+}
+
+.pending-task-date {
+    font-size: 0.85em;
+    color: #777;
+    background: #eee;
+    padding: 3px 8px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.pending-task-text {
+    flex: 1;
+}
+
+.mark-complete-btn {
+    background: #74b9ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.85em;
+}
+
+.mark-complete-btn:hover {
+    background: #0984e3;
+}
+
+/* 반응형(모바일) 수정 */
 @media (max-width: 768px) {
     main {
         grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+    
+    .calendar-section {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    .tree-section {
+        grid-column: 1;
+        grid-row: 2;
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+    .todo-section.active {
+        grid-column: 1;
+        grid-row: 3;
     }
     
     .calendar-grid {
@@ -359,5 +461,15 @@ main {
     .calendar-day {
         padding: 10px;
         min-height: 50px;
+    }
+    
+    .pending-task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .pending-task-date {
+        margin-bottom: 5px;
     }
 }

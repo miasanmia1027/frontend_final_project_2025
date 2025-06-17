@@ -16,6 +16,7 @@ class PlannerApp {
         this.renderCalendar(); // 달력 렌더링
         this.setupEventListeners(); // 이벤트 리스너 등록
         this.updateTreeGrowth(); // 나무 성장 상태 업데이트
+        this.renderPendingTasks(); // 미완료 할 일 렌더링
     }
 
     // 이벤트 리스너 등록 함수
@@ -129,6 +130,7 @@ class PlannerApp {
             `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 
         this.renderTodos();
+        this.updateTreeGrowth(); // 선택된 날짜에 따라 나무 업데이트
     }
 
     // 할 일 목록 렌더링 함수
@@ -194,6 +196,7 @@ class PlannerApp {
         this.renderTodos();
         this.renderCalendar();
         this.updateTreeGrowth();
+        this.renderPendingTasks(); // 미완료 할 일 업데이트
     }
 
     // 할 일 완료 체크 토글 함수
@@ -203,6 +206,7 @@ class PlannerApp {
             this.saveTodos();
             this.renderTodos();
             this.updateTreeGrowth();
+            this.renderPendingTasks(); // 미완료 할 일 업데이트
         }
     }
 
@@ -217,6 +221,7 @@ class PlannerApp {
             this.renderTodos();
             this.renderCalendar();
             this.updateTreeGrowth();
+            this.renderPendingTasks(); // 미완료 할 일 업데이트
         }
     }
 
@@ -227,17 +232,34 @@ class PlannerApp {
             day.classList.remove('selected');
         });
         this.selectedDate = null;
+        this.updateTreeGrowth(); // 선택된 날짜가 없을 때 전체 진행률로 업데이트
     }
 
     // 나무 성장 상태 업데이트 함수
     updateTreeGrowth() {
-        const totalTodos = this.getTotalTodos();
-        const completedTodos = this.getCompletedTodos();
-        const completionRate = totalTodos > 0 ? (completedTodos / totalTodos) * 100 : 0;
+        let totalTodos = 0;
+        let completedTodos = 0;
+        
+        // 선택된 날짜가 있으면 해당 날짜의 진행률만 표시
+        if (this.selectedDate) {
+            const dateString = this.formatDate(this.selectedDate);
+            const dayTodos = this.todos[dateString] || [];
+            totalTodos = dayTodos.length;
+            completedTodos = dayTodos.filter(todo => todo.completed).length;
+            
+            // 날짜 정보 추가하여 표시
+            document.getElementById('progress-text').textContent = 
+                `${this.selectedDate.getMonth() + 1}월 ${this.selectedDate.getDate()}일 진행률: ${totalTodos > 0 ? Math.round((completedTodos / totalTodos) * 100) : 0}% (${completedTodos}/${totalTodos})`;
+        } 
+        // 선택된 날짜가 없으면 전체 진행률 표시
+        else {
+            totalTodos = this.getTotalTodos();
+            completedTodos = this.getCompletedTodos();
+            document.getElementById('progress-text').textContent = 
+                `전체 진행률: ${totalTodos > 0 ? Math.round((completedTodos / totalTodos) * 100) : 0}% (${completedTodos}/${totalTodos})`;
+        }
 
-        // 진행률 텍스트 업데이트
-        document.getElementById('progress-text').textContent = 
-            `진행률: ${Math.round(completionRate)}% (${completedTodos}/${totalTodos})`;
+        const completionRate = totalTodos > 0 ? (completedTodos / totalTodos) * 100 : 0;
 
         // 나무 성장 단계 적용
         const tree = document.getElementById('tree');
@@ -251,6 +273,84 @@ class PlannerApp {
         }
         if (completionRate >= 75) {
             tree.classList.add('growth-3');
+        }
+    }
+
+    // 미완료 할 일 렌더링 함수
+    renderPendingTasks() {
+        const pendingList = document.getElementById('pending-tasks-list');
+        pendingList.innerHTML = '';
+
+        // 오늘 날짜
+        const today = new Date();
+        const todayString = this.formatDate(today);
+
+        // 날짜별 정렬을 위해 미완료 할 일을 배열로 수집
+        const pendingTasks = [];
+
+        // 모든 날짜의 할 일 검색
+        Object.keys(this.todos).forEach(dateString => {
+            this.todos[dateString].forEach((todo, index) => {
+                if (!todo.completed) {
+                    const date = new Date(dateString);
+                    pendingTasks.push({
+                        date: date,
+                        dateString: dateString,
+                        text: todo.text,
+                        index: index
+                    });
+                }
+            });
+        });
+
+        // 날짜순으로 정렬 (오늘 할 일이 맨 위)
+        pendingTasks.sort((a, b) => a.date - b.date);
+
+        if (pendingTasks.length === 0) {
+            pendingList.innerHTML = '<p>미완료된 할 일이 없습니다!</p>';
+            return;
+        }
+
+        // 미완료 할 일 요소 생성
+        pendingTasks.forEach(task => {
+            const taskElement = document.createElement('div');
+            taskElement.className = 'pending-task-item';
+            
+            // 오늘 할 일인 경우 강조
+            if (task.dateString === todayString) {
+                taskElement.style.borderLeftColor = '#ff4757';
+            }
+
+            const dateObj = new Date(task.dateString);
+            const month = dateObj.getMonth() + 1;
+            const day = dateObj.getDate();
+            
+            taskElement.innerHTML = `
+                <span class="pending-task-date">${month}월 ${day}일</span>
+                <span class="pending-task-text">${task.text}</span>
+                <button class="mark-complete-btn" onclick="planner.markComplete('${task.dateString}', ${task.index})">
+                    완료하기
+                </button>
+            `;
+            
+            pendingList.appendChild(taskElement);
+        });
+    }
+
+    // 미완료 할 일 완료 처리 함수
+    markComplete(dateString, index) {
+        if (this.todos[dateString] && this.todos[dateString][index]) {
+            this.todos[dateString][index].completed = true;
+            this.saveTodos();
+            this.renderPendingTasks();
+            this.updateTreeGrowth();
+            
+            // 현재 선택된 날짜의 할 일이라면 할 일 목록도 업데이트
+            if (this.selectedDate && this.formatDate(this.selectedDate) === dateString) {
+                this.renderTodos();
+            }
+            
+            this.renderCalendar();
         }
     }
 
