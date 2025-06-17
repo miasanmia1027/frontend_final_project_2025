@@ -8,7 +8,6 @@
         body {
             font-family: 'Nanum Gothic', sans-serif;
             background-color: #d9d9d9;
-            /* 배경 이미지는 JavaScript에서 동적으로 설정됩니다 */
             background-size: cover;
             background-attachment: fixed;
             margin: 0;
@@ -80,6 +79,9 @@
             border-radius: 5px;
             margin-bottom: 10px;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .profile-pic img {
@@ -297,6 +299,9 @@
             .profile-pic {
                 width: 60px;
                 height: 60px;
+                min-width: 60px;
+                min-height: 60px;
+                aspect-ratio: 1/1;
             }
             
             .login-container {
@@ -349,6 +354,9 @@
             .profile-pic {
                 width: 60px;
                 height: 60px;
+                min-width: 60px;
+                min-height: 60px;
+                aspect-ratio: 1/1;
             }
             
             .login-container {
@@ -380,6 +388,7 @@
             width: 90%;
             background-color: #f9f9f9;
             border-radius: 5px;
+            text-align: center;
         }
         
         .login-form-container h4 {
@@ -392,43 +401,78 @@
             padding-bottom: 10px;
         }
         
-        .login-form-container input {
-            margin-bottom: 10px;
-        }
-        
-        .login-form-container .login-btn {
+        .login-btn {
             background-color: #6699cc;
             color: white;
             border: none;
-            padding: 8px;
+            padding: 5px 10px;
+            margin-top: 5px;
+            font-size: 12px;
             cursor: pointer;
-            width: 100%;
             border-radius: 3px;
             font-weight: bold;
+            width: auto;
         }
         
-        .logout-container {
-            margin-top: 20px;
-            border: 1px solid #ddd;
-            padding: 15px;
-            width: 90%;
-            background-color: #f9f9f9;
-            border-radius: 5px;
+        /* 프로필 및 배경 이미지 변경 버튼 */
+        .image-change-buttons {
+            margin-top: 10px;
             text-align: center;
+            width: 90%;
         }
         
-        .user-info-box {
-            margin-bottom: 10px;
-            font-size: 12px;
-        }
-        
-        .logout-btn {
-            background-color: #ff6666;
+        .image-change-buttons button {
+            background-color: #6699cc;
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 5px 10px;
+            margin: 5px;
+            font-size: 12px;
             cursor: pointer;
             border-radius: 3px;
+            width: auto;
+            display: inline-block;
+        }
+        
+        /* 파일 입력 숨기기 */
+        .hidden-file-input {
+            display: none;
+        }
+        
+        /* 이름 변경 스타일 */
+        .name-change {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            width: 90%;
+        }
+        
+        .name-change input {
+            flex: 1;
+            margin-right: 5px;
+            padding: 3px 5px;
+            font-size: 12px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        
+        .name-change button {
+            background-color: #6699cc;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            margin: 0;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 3px;
+            width: auto;
+        }
+        
+        .login-notice {
+            color: #ff6666;
+            font-size: 11px;
+            text-align: center;
+            margin-top: 5px;
             font-weight: bold;
         }
     </style>
@@ -451,10 +495,15 @@
                 </div>
                 <div class="login-container">
                     <div class="login-info" id="login-info">
-                        환영합니다!
+                        미니홈피님의 미니홈피입니다<br>
+                        프로필을 수정하려면<br>
+                        로그인하세요!
+                    </div>
+                    <div id="login-notice" class="login-notice">
+                        로그인하면 프로필을 수정할 수 있습니다!
                     </div>
                     <div>
-                        <p id="user-name">사용자</p>
+                        <p id="user-name">미니홈피</p>
                         <div>
                             <span>일촌: </span>
                             <span id="friend-count">0</span>
@@ -464,25 +513,14 @@
                 </div>
                 
                 <div class="visitor-count">
-                    <p id="visit-count">Today: 0 | Total: 0</p>
+                    <p id="visit-count">Today: 5 | Total: 12,345</p>
                 </div>
                 
                 <!-- 로그인/로그아웃 영역 (로그인 상태에 따라 다르게 표시) -->
                 <div id="auth-container">
                     <!-- 비로그인 상태: 로그인 폼 표시 -->
                     <div class="login-form-container" id="login-form">
-                        <h4>로그인</h4>
-                        <input type="text" id="login-username" placeholder="아이디">
-                        <input type="password" id="login-password" placeholder="비밀번호">
-                        <button class="login-btn" id="login-submit">로그인</button>
-                    </div>
-                    
-                    <!-- 로그인 상태: 사용자 정보와 로그아웃 버튼 표시 -->
-                    <div class="logout-container" id="logout-form" style="display: none;">
-                        <div class="user-info-box">
-                            <p><strong id="logged-user-name">사용자</strong>님 로그인 중</p>
-                        </div>
-                        <button class="logout-btn" id="logout-btn">로그아웃</button>
+                        <button class="submit-btn" id="login-submit">로그인</button>
                     </div>
                 </div>
             </div>
@@ -494,149 +532,44 @@
 
             <!-- 오른쪽 네비게이션 바 -->
             <div class="right-panel">
+                <div class="nav-button" data-page="html/main_page/main_page.html">메인</div>
                 <div class="nav-button" data-page="html/planner_page/planner_page.html">캘린더</div>
+                <div class="nav-button" data-page="html/diary_page/diary_page.html">일기</div>
                 <div class="nav-button" data-page="html/note_page/note_page.html">노트</div>
             </div>
         </div>
     </div>
 
     <script>
-        // 사용자 정보 설정 - 폴더명 기준
-        const USER_FOLDER = '안동건';
+        // 사용자 정보 설정 - 'new' 폴더 사용
+        const USER_FOLDER = 'new';
         
-        // 이미지 경로 설정 - 실제 파일명으로 수정
-        const BACKGROUND_PATH = `img/${USER_FOLDER}/background.webp`; // 확장자 수정
-        const PROFILE_PATH = `img/${USER_FOLDER}/profile_img.avif`;  // 확장자 수정
-        
-        // 사용자 정보 객체
-        const userInfo = {
-            name: USER_FOLDER,
-            today: 5,
-            total: 12345,
-            friends: 1
-        };
-        
-        // 로그인 상태
-        let isLoggedIn = false;
+        // 이미지 경로 설정 - new 폴더 기준
+        const PROFILE_PATH = `img/${USER_FOLDER}/profile_img.jpg`;
+        const BACKGROUND_PATH = `img/${USER_FOLDER}/background.jpg`;
         
         // 페이지 로드 시 실행
         window.addEventListener('load', function() {
-            // 로그인 상태 확인 및 복원
-            checkLoginStatus();
-            
-            // 배경 이미지 설정
-            document.body.style.backgroundImage = `url('${BACKGROUND_PATH}')`;
-            console.log('배경 이미지 경로:', BACKGROUND_PATH); // 디버깅용
-            
             // 프로필 이미지 설정
-            const profileImg = document.getElementById('profile-image');
-            profileImg.src = PROFILE_PATH;
-            profileImg.onerror = function() {
-                this.src = 'img/default_profile.jpg'; // 기본 이미지 설정
+            document.getElementById('profile-image').src = PROFILE_PATH;
+            document.body.style.backgroundImage = `url('${BACKGROUND_PATH}')`;
+            
+            // 이미지 로드 에러 처리
+            document.getElementById('profile-image').onerror = function() {
+                this.src = 'img/default_profile.jpg';
                 console.error('프로필 이미지를 찾을 수 없습니다:', PROFILE_PATH);
             };
-            
-            // 사용자 정보 업데이트
-            updateUserInfo();
             
             // 초기 페이지 로드 (첫 번째 메뉴로)
             const firstPage = document.querySelector('.nav-button').getAttribute('data-page');
             document.getElementById('content-frame').src = firstPage;
             document.querySelector('.nav-button').style.backgroundColor = '#5588bb';
             
-            // 로그인 버튼 이벤트 리스너
-            document.getElementById('login-submit').addEventListener('click', login);
-            
-            // 로그아웃 버튼 이벤트 리스너
-            document.getElementById('logout-btn').addEventListener('click', logout);
+            // 로그인 버튼 이벤트 리스너 - standup 경로로 수정
+            document.getElementById('login-submit').addEventListener('click', function() {
+                window.location.href = "standup/pages/login_page/login.html";
+            });
         });
-        
-        // 로그인 상태 확인
-        function checkLoginStatus() {
-            // 로컬 스토리지에서 로그인 상태 확인
-            const savedLoginStatus = localStorage.getItem('isLoggedIn');
-            const savedUsername = localStorage.getItem('username');
-            
-            if (savedLoginStatus === 'true' && savedUsername) {
-                isLoggedIn = true;
-                document.getElementById('logged-user-name').textContent = savedUsername;
-                document.getElementById('login-form').style.display = 'none';
-                document.getElementById('logout-form').style.display = 'block';
-            } else {
-                isLoggedIn = false;
-                document.getElementById('login-form').style.display = 'block';
-                document.getElementById('logout-form').style.display = 'none';
-            }
-        }
-        
-        // 로그인 함수
-        function login() {
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            
-            // 간단한 유효성 검사
-            if (!username || !password) {
-                alert('아이디와 비밀번호를 입력해주세요');
-                return;
-            }
-            
-            // 실제 서비스에서는 서버 통신을 통한 인증이 필요합니다
-            // 여기서는 간단히 임시 인증 처리
-            isLoggedIn = true;
-            
-            // 로그인 정보 저장
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('username', username);
-            
-            // UI 업데이트
-            document.getElementById('logged-user-name').textContent = username;
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('logout-form').style.display = 'block';
-            
-            alert(`${username}님, 로그인되었습니다!`);
-        }
-        
-        // 로그아웃 함수
-        function logout() {
-            // 로그인 정보 삭제
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('username');
-            
-            // 상태 업데이트
-            isLoggedIn = false;
-            
-            // UI 업데이트
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('logout-form').style.display = 'none';
-            
-            // 입력 필드 초기화
-            document.getElementById('login-username').value = '';
-            document.getElementById('login-password').value = '';
-            
-            alert('로그아웃되었습니다');
-        }
-        
-        // 사용자 정보 업데이트 함수
-        function updateUserInfo() {
-            // 타이틀 업데이트
-            document.getElementById('page-title').textContent = `${userInfo.name}님의 미니홈피`;
-            
-            // 환영 메시지 업데이트
-            document.getElementById('login-info').innerHTML = 
-                `${userInfo.name}님 미니홈피에<br>
-                 오신 것을<br>
-                 환영합니다!`;
-            
-            // 사용자 이름 업데이트
-            document.getElementById('user-name').textContent = userInfo.name;
-            
-            // 일촌 수 업데이트
-            document.getElementById('friend-count').textContent = userInfo.friends;
-            
-            // 방문자 수 업데이트
-            document.getElementById('visit-count').textContent = 
-                `Today: ${userInfo.today} | Total: ${userInfo.total.toLocaleString()}`;
-        }
 
         // 네비게이션 버튼 클릭 시 iframe 소스 변경
         document.querySelectorAll('.nav-button').forEach(button => {
