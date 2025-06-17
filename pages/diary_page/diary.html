@@ -10,7 +10,7 @@
   </head>
   <body>
     <div class="container">
-      <div class="diary-wrapper">
+      <div class="diary-wrapper" id="diary-wrapper">
         <h1 class="diary-title">Daily diary</h1>
         <div class="diary-date" id="current-date">날짜 로딩 중...</div>
 
@@ -26,13 +26,25 @@
         ></textarea>
         <button class="save-button">Save</button>
       </div>
+      <!-- 작성한 일기 목록을 본문 아래로 이동 -->
+      <aside
+        class="sidebar"
+        id="diary-sidebar"
+        style="
+          position: static;
+          width: 100%;
+          max-width: 800px;
+          margin: 30px auto 0;
+          box-shadow: none;
+          border-radius: 20px;
+          border: 1px solid #eee;
+          display: block;
+        "
+      >
+        <h2>작성한 일기</h2>
+        <div id="entry-list"></div>
+      </aside>
     </div>
-
-    <!-- 사이드바: 작성한 일기 목록 -->
-    <aside class="sidebar" id="diary-sidebar">
-      <h2>작성한 일기</h2>
-      <div id="entry-list"></div>
-    </aside>
 
     <script src="../../js/login_page/auth.js"></script>
     <script src="../../js/main_page/script.js"></script>
@@ -55,16 +67,25 @@
       // 저장된 일기 불러오기
       function loadEntries() {
         const entries = JSON.parse(localStorage.getItem("diaryEntries")) || [];
-        if (entries.length > 0) sidebar.style.display = "block";
         entryList.innerHTML = ""; // 초기화
-        entries.forEach(({ date, subject, content }) => {
+        entries.forEach(({ date, subject, content }, idx) => {
           const entry = document.createElement("div");
           entry.className = "entry-item";
-          entry.innerHTML = `<time>${date}</time><span class="entry-title" style="cursor:pointer">${subject}</span>`;
+          entry.innerHTML = `<div class='entry-content'><time>${date}</time><span class="entry-title" style="cursor:pointer">${subject}</span></div> <button class="delete-entry">삭제</button>`;
           entry.querySelector("span").addEventListener("click", () => {
             subjectInput.value = subject;
             contentInput.value = content;
             dateDisplay.textContent = date;
+            document
+              .getElementById("diary-wrapper")
+              .scrollIntoView({ behavior: "smooth" });
+          });
+          entry.querySelector(".delete-entry").addEventListener("click", () => {
+            if (confirm("정말 삭제하시겠습니까?")) {
+              entries.splice(idx, 1);
+              localStorage.setItem("diaryEntries", JSON.stringify(entries));
+              loadEntries();
+            }
           });
           entryList.prepend(entry);
         });
