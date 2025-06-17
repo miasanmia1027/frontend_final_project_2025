@@ -135,6 +135,7 @@ main > .music-panel {
 
 .calendar-grid-section {
     flex: 2;
+    font-family: 'YUniverse-B';
 }
 
 .music-panel {
@@ -245,6 +246,7 @@ h2 {
 
 /* --- 달력(캘린더) 스타일 planner_page에서 복사 --- */
 .calendar-header {
+    font-family: 'YUniverse-B';
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -317,7 +319,7 @@ h2 {
     background:#FF88A7;
     color: white;
     border-radius: 10px;
-    padding: 2px 6px;
+    padding: 1px 6px;
     align-self: center;
-    margin-top: 5px;
+    margin-top: 1px;
 }

@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'S-CoreDream-3Light';
 }
 
 body {
@@ -452,4 +452,18 @@ header {
 /* 다운로드 버튼 스타일 */
 #download-file-btn {
     background-color: #28a745;
+}
+
+@font-face {
+    font-family: 'YUniverse-B';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_yuniverse@1.0/YUniverse-B.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
