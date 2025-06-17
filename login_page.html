@@ -419,19 +419,34 @@
             margin-top: 10px;
             text-align: center;
             width: 90%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
         }
         
         .image-change-buttons button {
             background-color: #6699cc;
             color: white;
             border: none;
-            padding: 5px 10px;
-            margin: 5px;
+            padding: 8px 5px;
             font-size: 12px;
             cursor: pointer;
             border-radius: 3px;
-            width: auto;
+            width: 100%;
             display: inline-block;
+        }
+        
+        /* 초기화 버튼 스타일 */
+        .reset-btn {
+            background-color: #ff6666 !important;
+        }
+        
+        /* 버튼 그룹 스타일 */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 5px;
         }
         
         /* 파일 입력 숨기기 */
@@ -533,7 +548,9 @@
                 <!-- 이미지 변경 버튼 -->
                 <div class="image-change-buttons" id="image-change-buttons">
                     <button id="change-profile">프로필 사진 변경</button>
+                    <button id="reset-profile" class="reset-btn">초기화</button>
                     <button id="change-background">배경 변경</button>
+                    <button id="reset-background" class="reset-btn">초기화</button>
                     <input type="file" id="profile-upload" class="hidden-file-input" accept="image/*">
                     <input type="file" id="background-upload" class="hidden-file-input" accept="image/*">
                 </div>
@@ -698,6 +715,24 @@
             // 배경 이미지 변경 버튼 이벤트
             document.getElementById('change-background').addEventListener('click', function() {
                 document.getElementById('background-upload').click();
+            });
+            
+            // 프로필 초기화 버튼 이벤트
+            document.getElementById('reset-profile').addEventListener('click', function() {
+                // 로컬 스토리지에서 커스텀 프로필 제거
+                localStorage.removeItem('custom-profile');
+                // 기본 프로필 이미지로 복원
+                document.getElementById('profile-image').src = PROFILE_PATH;
+                alert('프로필 이미지가 초기화되었습니다.');
+            });
+            
+            // 배경 초기화 버튼 이벤트
+            document.getElementById('reset-background').addEventListener('click', function() {
+                // 로컬 스토리지에서 커스텀 배경 제거
+                localStorage.removeItem('custom-background');
+                // 기본 배경 이미지로 복원
+                document.body.style.backgroundImage = `url('${BACKGROUND_PATH}')`;
+                alert('배경 이미지가 초기화되었습니다.');
             });
             
             // 프로필 이미지 업로드 처리
