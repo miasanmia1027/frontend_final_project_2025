@@ -2,8 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 60px);
-    padding: 20px;
+    min-height: 100vh;
+    padding: 5px;
 }
 
 .auth-box {
