@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>일기 - Daily Life</title>
+    <link rel="stylesheet" href="../../css/main_page/styles.css" />
+    <link rel="stylesheet" href="../../css/main_page/music.css" />
+    <link rel="stylesheet" href="../../css/diary_page/diary.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="diary-wrapper" id="diary-wrapper">
+        <h1 class="diary-title">Daily diary</h1>
+        <div class="diary-date" id="current-date">날짜 로딩 중...</div>
+
+        <input
+          type="text"
+          class="diary-subject"
+          placeholder="제목을 입력하세요"
+        />
+
+        <textarea
+          class="diary-textarea"
+          placeholder="오늘 하루는 어땠나요? 감정을 자유롭게 적어보세요 :D"
+        ></textarea>
+        <button class="save-button">Save</button>
+      </div>
+      <!-- 작성한 일기 목록을 본문 아래로 이동 -->
+      <aside
+        class="sidebar"
+        id="diary-sidebar"
+        style="
+          position: static;
+          width: 100%;
+          max-width: 800px;
+          margin: 30px auto 0;
+          box-shadow: none;
+          border-radius: 20px;
+          border: 1px solid #eee;
+          display: block;
+        "
+      >
+        <h2>작성한 일기</h2>
+        <div id="entry-list"></div>
+      </aside>
+    </div>
+
+    <script src="../../js/login_page/auth.js"></script>
+    <script src="../../js/main_page/script.js"></script>
+    <script>
+      const subjectInput = document.querySelector(".diary-subject");
+      const contentInput = document.querySelector(".diary-textarea");
+      const saveButton = document.querySelector(".save-button");
+      const sidebar = document.getElementById("diary-sidebar");
+      const entryList = document.getElementById("entry-list");
+      const dateDisplay = document.getElementById("current-date");
+
+      const formatDate = (date) => {
+        return date.toLocaleDateString("ko-KR", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        });
+      };
+
+      // 저장된 일기 불러오기
+      function loadEntries() {
+        const entries = JSON.parse(localStorage.getItem("diaryEntries")) || [];
+        entryList.innerHTML = ""; // 초기화
+        entries.forEach(({ date, subject, content }, idx) => {
+          const entry = document.createElement("div");
+          entry.className = "entry-item";
+          entry.innerHTML = `<div class='entry-content'><time>${date}</time><span class="entry-title" style="cursor:pointer">${subject}</span></div> <button class="delete-entry">삭제</button>`;
+          entry.querySelector("span").addEventListener("click", () => {
+            subjectInput.value = subject;
+            contentInput.value = content;
+            dateDisplay.textContent = date;
+            document
+              .getElementById("diary-wrapper")
+              .scrollIntoView({ behavior: "smooth" });
+          });
+          entry.querySelector(".delete-entry").addEventListener("click", () => {
+            if (confirm("정말 삭제하시겠습니까?")) {
+              entries.splice(idx, 1);
+              localStorage.setItem("diaryEntries", JSON.stringify(entries));
+              loadEntries();
+            }
+          });
+          entryList.prepend(entry);
+        });
+      }
+
+      // 날짜 표시
+      document.addEventListener("DOMContentLoaded", () => {
+        const now = new Date();
+        dateDisplay.textContent = now.toLocaleDateString("ko-KR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          weekday: "long",
+        });
+        loadEntries();
+      });
+
+      // 저장 버튼
+      saveButton.addEventListener("click", () => {
+        const subject = subjectInput.value.trim();
+        const content = contentInput.value.trim();
+
+        if (!subject) return alert("제목을 입력해주세요 ✏️");
+        if (!content) return alert("일기를 입력해주세요 📝");
+
+        const now = new Date();
+        const dateText = formatDate(now);
+
+        // 저장할 데이터
+        const newEntry = { date: dateText, subject, content };
+        const entries = JSON.parse(localStorage.getItem("diaryEntries")) || [];
+        entries.push(newEntry);
+        localStorage.setItem("diaryEntries", JSON.stringify(entries));
+
+        subjectInput.value = "";
+        contentInput.value = "";
+        dateDisplay.textContent = now.toLocaleDateString("ko-KR", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          weekday: "long",
+        });
+
+        loadEntries();
+        alert("일기가 저장되었습니다!");
+      });
+    </script>
+  </body>
+</html>

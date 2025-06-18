@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Life</title>
+    <link rel="stylesheet" href="../../css/main_page/styles.css" />
+    <link rel="stylesheet" href="../../css/main_page/music.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main>
+        <section class="weather-section">
+          <h2>Today's weather</h2>
+          <div class="weather-content">
+            <div class="weather-image">
+              <img
+                src="../assets/weather/sunny.jpg"
+                alt="날씨"
+                id="weather-icon"
+              />
+            </div>
+            <div class="weather-back">
+              <div class="weather">22*C</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="calendar-grid-section">
+          <div class="calendar-section">
+            <div class="calendar-header">
+              <button id="prev-month">&lt;</button>
+              <h2 id="calendar-title"></h2>
+              <button id="next-month">&gt;</button>
+            </div>
+            <div class="calendar-grid" id="calendar-grid">
+              <div class="day-header">일</div>
+              <div class="day-header">월</div>
+              <div class="day-header">화</div>
+              <div class="day-header">수</div>
+              <div class="day-header">목</div>
+              <div class="day-header">금</div>
+              <div class="day-header">토</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="music-panel">
+          <h3 class="music-nct">Music Player</h3>
+          <div class="music-content">
+            <!-- 음악 플레이어 영역 추가 -->
+            <section class="music-player">
+              <div class="player">
+                <img
+                  src="../../assets/Wish_album.jpg"
+                  alt="앨범 커버"
+                  class="album-cover"
+                />
+                <div class="track-info">
+                  <h3 class="song-title">Wish</h3>
+                  <p class="artist">NCT WISH</p>
+                  <div class="progress-bar">
+                    <div class="progress"></div>
+                  </div>
+                  <div class="controls">
+                    <button id="prev">⏮</button>
+                    <button id="play">⏯</button>
+                    <button id="next">⏭</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+
+      <section class="fortune-section">
+        <h2>Fortune</h2>
+        <div class="fortune-content">
+          <div class="zodiac-sign">
+            <p id="zodiac-fortune">로딩중...</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="quote-section">
+        <h2>Words for you</h2>
+        <div class="quote-content">
+          <p id="quote-author"></p>
+        </div>
+      </section>
+    </div>
+
+    <script src="../../js/main_page/script.js"></script>
+    <script>
+      const albumCover = document.querySelector(".album-cover");
+      const songTitle = document.querySelector(".song-title");
+      const artist = document.querySelector(".artist");
+      const prevButton = document.getElementById("prev");
+      const playButton = document.getElementById("play");
+      const nextButton = document.getElementById("next");
+
+      // TODO: Add your list of recommended songs here
+      const recommendedSongs = [
+        {
+          albumArt: "../../assets/Wish_album.jpg",
+          title: "Wish",
+          artist: "NCT WISH",
+        },
+        // Add more songs here, e.g.,
+        {
+          albumArt: "../../assets/Songbird_album.jpg",
+          title: "Songbird",
+          artist: "NCT WISH",
+        },
+        {
+          albumArt: "../../assets/NASA_albm.jpg",
+          title: "NASA",
+          artist: "NCT WISH",
+        },
+        {
+          albumArt: "../../assets/poppop_album.jpg",
+          title: "Poppop",
+          artist: "NCT WISH",
+        },
+        {
+          albumArt: "../../assets/steady_album.jpg",
+          title: "Steady",
+          artist: "NCT WISH",
+        },
+        {
+          albumArt: "../../assets/Songbird_album.jpg",
+          title: "Songbird",
+          artist: "NCT WISH",
+        },
+      ];
+
+      let currentSongIndex = 0;
+
+      function loadSong(song) {
+        albumCover.src = song.albumArt;
+        songTitle.textContent = song.title;
+        artist.textContent = song.artist;
+        // TODO: Add logic to load and play the actual audio file
+      }
+
+      function nextSong() {
+        currentSongIndex = (currentSongIndex + 1) % recommendedSongs.length;
+        loadSong(recommendedSongs[currentSongIndex]);
+      }
+
+      function prevSong() {
+        currentSongIndex =
+          (currentSongIndex - 1 + recommendedSongs.length) %
+          recommendedSongs.length;
+        loadSong(recommendedSongs[currentSongIndex]);
+      }
+
+      // Event Listeners for buttons
+      nextButton.addEventListener("click", nextSong);
+      prevButton.addEventListener("click", prevSong);
+
+      // 재생 버튼 클릭 이벤트
+      document.getElementById("play").addEventListener("click", () => {
+        window.open("https://www.youtube.com/watch?v=LNETckymbzk", "_blank");
+      });
+
+      // Initial song load
+      loadSong(recommendedSongs[currentSongIndex]);
+    </script>
+    <script src="../../js/planner_page/planner_page.js"></script>
+  </body>
+</html>

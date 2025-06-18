@@ -1,0 +1,500 @@
+/* 전체 기본 스타일 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 바디 배경 및 폰트 설정 */
+body {
+    font-family: 'S-CoreDream-3Light';
+    background: linear-gradient(135deg, #93DAFF, #93DAFF);
+    min-height: 100vh;
+    color: #333;
+}
+
+/* 전체 컨테이너 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 헤더 스타일 */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+header h1 {
+    font-family: 'YUniverse-B' !important;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* 나무 성장 섹션 */
+.tree-section {
+    background: linear-gradient(135deg, #f8fbff 80%, #e3f6ff 100%);
+    border-radius: 25px;
+    padding: 32px 24px 24px 24px;
+    margin: 16px 0;
+    box-shadow: 0 8px 32px rgba(147,218,255,0.18), 0 1.5px 8px rgba(147,218,255,0.10);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1.5px solid #e0f2ff;
+}
+
+/* 나무 컨테이너 */
+.tree-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* 나무(트렁크+잎) */
+.tree {
+    position: relative;
+    width: 80px;
+    height: 120px;
+    background: #e6f7ff;
+    border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+    box-shadow: 0 4px 16px rgba(147,218,255,0.15);
+    margin-bottom: 10px;
+}
+
+/* 나무 몸통 */
+.trunk {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 15px;
+    height: 40px;
+    background: #4b2e2e;
+    border-radius: 0 0 5px 5px;
+}
+
+/* 나뭇잎 기본 스타일 */
+.leaves {
+    position: absolute;
+    border-radius: 50%;
+    background: #006400;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+/* 잎 단계별 크기 및 위치 */
+.leaves.level-1 {
+    width: 30px;
+    height: 30px;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.leaves.level-2 {
+    width: 45px;
+    height: 45px;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.leaves.level-3 {
+    width: 60px;
+    height: 60px;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* 나무 성장 단계별 잎 보이기 */
+.tree.growth-1 .level-1 { opacity: 1; }
+.tree.growth-2 .level-1, .tree.growth-2 .level-2 { opacity: 1; }
+.tree.growth-3 .level-1, .tree.growth-3 .level-2, .tree.growth-3 .level-3 { opacity: 1; }
+
+/* 진행률 텍스트 */
+.progress-info {
+    text-align: center;
+    font-weight: bold;
+    color: #96C7ED;
+}
+
+/* 메인 레이아웃(달력+나무+할일) - 수정된 부분 */
+main {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* 달력 섹션 - 첫번째 셀에 배치 (높이 고정) */
+.calendar-section {
+    height: 600px;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 달력 헤더(월 이동 버튼) */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-header button {
+    background: #96C7ED;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.calendar-header button:hover {
+    background: #96C7ED;
+}
+
+#calendar-title {
+    font-size: 1.5em;
+    color: #333;
+}
+
+/* 달력 그리드 (스크롤 추가) */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+/* 요일 헤더 */
+.day-header {
+    background: #96C7ED;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* 날짜 셀 */
+.calendar-day {
+    background: white;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* 날짜 셀 호버 효과 */
+.calendar-day:hover {
+    background: #e3f2fd;
+    transform: scale(1.05);
+}
+
+/* 선택된 날짜 */
+.calendar-day.selected {
+    background: #74b9ff;
+    color: white;
+}
+
+/* 이번 달이 아닌 날짜 */
+.calendar-day.other-month {
+    color: #ccc;
+    background: #f5f5f5;
+}
+
+/* 할 일 있는 날짜 표시 */
+.calendar-day.has-todos {
+    border-left: 4px solid	#FF6A89;
+}
+
+/* 할 일 개수 뱃지 */
+.todo-count {
+    font-size: 0.8em;
+    background:	#FF6A89;
+    color: white;
+    border-radius: 10px;
+    padding: 2px 6px;
+    align-self: center;
+    margin-top: 5px;
+}
+
+/* 할 일 섹션(숨김 기본) */
+.todo-section {
+    background: linear-gradient(135deg, #f8fbff 80%, #e3f6ff 100%);
+    border-radius: 25px;
+    box-shadow: 0 8px 32px rgba(147,218,255,0.10), 0 1.5px 8px rgba(147,218,255,0.08);
+    border: 1.5px solid #e0f2ff;
+    padding: 32px 24px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    min-width: 320px;
+}
+
+/* 할 일 섹션 활성화 */
+.todo-section.active {
+    display: flex; /* block에서 flex로 변경하여 내부 레이아웃 유지 */
+}
+
+/* 할 일 헤더 */
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.todo-header h3 {
+    color: #333;
+}
+
+/* 할 일 닫기 버튼 */
+#close-todo {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+}
+
+/* 할 일 입력창 */
+.todo-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#todo-input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* 할 일 추가 버튼 */
+#add-todo {
+    background: #74b9ff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#add-todo:hover {
+    background: #0984e3;
+}
+
+/* 할 일 목록 */
+.todo-list {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 5px; /* 스크롤바 공간 확보 */
+}
+
+/* 할 일 아이템 */
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: white;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* 완료된 할 일 */
+.todo-item.completed {
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+/* 할 일 텍스트 */
+.todo-text {
+    flex: 1;
+    margin-left: 10px;
+}
+
+/* 할 일 액션 버튼 */
+.todo-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.todo-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.complete-btn {
+    color: #27ae60;
+}
+
+.delete-btn {
+    color: #e74c3c;
+}
+
+.todo-actions button:hover {
+    background: #f0f0f0;
+}
+
+/* 미완료 할 일 섹션 */
+.pending-tasks-section {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    max-height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.pending-tasks-section h3 {
+    color:#96C7ED;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    border-bottom: 2px solid #96C7ED;
+    padding-bottom: 10px;
+}
+
+.pending-tasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    max-height: 250px;
+}
+
+.pending-task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    border-left: 4px solid #ff9f43;
+}
+
+.pending-task-date {
+    font-size: 0.85em;
+    color: #777;
+    background: #eee;
+    padding: 3px 8px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.pending-task-text {
+    flex: 1;
+}
+
+.mark-complete-btn {
+    background: #74b9ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.85em;
+}
+
+.mark-complete-btn:hover {
+    background: #0984e3;
+}
+
+/* 반응형(모바일) 수정 */
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+    
+    .calendar-section {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    .tree-section {
+        grid-column: 1;
+        grid-row: 2;
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+    .todo-section.active {
+        grid-column: 1;
+        grid-row: 3;
+    }
+    
+    .calendar-grid {
+        font-size: 14px;
+    }
+    
+    .calendar-day {
+        padding: 10px;
+        min-height: 50px;
+    }
+    
+    .pending-task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .pending-task-date {
+        margin-bottom: 5px;
+    }
+}
+
+main, .calendar-section, .tree-section, .todo-section, .pending-tasks-section, .calendar-header, .day-header, .calendar-day, .progress-info, .todo-header, .todo-input, .todo-list, .pending-tasks-list {
+    font-family: 'S-CoreDream-3Light', Arial, sans-serif;
+}
+
+@font-face {
+    font-family: 'IAMAPLAYER';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/IAMAPLAYER.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'YUniverse-B';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_yuniverse@1.0/YUniverse-B.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
